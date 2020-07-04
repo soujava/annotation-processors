@@ -36,11 +36,11 @@ public class FieldMetaData {
         return entity;
     }
 
-    public String getGetName() {
+    public String getReader() {
         return getName;
     }
 
-    public String getSetName() {
+    public String getWriter() {
         return setName;
     }
 

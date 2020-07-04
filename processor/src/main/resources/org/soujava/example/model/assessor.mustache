@@ -9,11 +9,11 @@ public final class {{className}} {
  }
 
  public Object getValue({{entity}} object) {
-    return object.{{getName}}();
+    return object.{{reader}}();
 }
 
 public void setValue({{entity}} object, Object value) {
-    object.{{setName}}(({{type}})value);
+    object.{{writer}}(({{type}})value);
 }
 
 
