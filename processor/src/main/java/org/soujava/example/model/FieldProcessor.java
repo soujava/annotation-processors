@@ -56,34 +56,36 @@ public class FieldProcessor {
 
         Column column = field.getAnnotation(Column.class);
         final String packageName = getPackageName(entity);
-        final String entity = getSimpleNameAsString(this.entity);//
+        final String entityName = getSimpleNameAsString(this.entity);//
         final String name = column.value().isBlank() ? getSimpleNameAsString(field) : fieldName;
         final String className = field.asType().toString();//column type
         final String getMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
                 .filter(hasGetterName)
-                .findFirst().orElseThrow(generateGetterError(fieldName, packageName, entity, "There is not valid getter method to the field: "));
+                .findFirst().orElseThrow(generateGetterError(fieldName, packageName, entityName,
+                        "There is not valid getter method to the field: "));
         final String setMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
                 .filter(hasSetterName.or(hasIsName))
-                .findFirst().orElseThrow(generateGetterError(fieldName, packageName, entity, "There is not valid setter method to the field: "));
+                .findFirst().orElseThrow(generateGetterError(fieldName, packageName, entityName,
+                        "There is not valid setter method to the field: "));
 
         FieldMetaData metadata = FieldMetaData.builder()
                 .withPackageName(packageName)
                 .withName(name)
                 .withType(className)
-                .withEntity(entity)
+                .withEntity(entityName)
                 .withReader(getMethod)
                 .withWriter(setMethod).build();
 
         Filer filer = processingEnv.getFiler();
         try {
-            JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage());
+            JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
             try (Writer writer = fileObject.openWriter()) {
                 template.execute(writer, metadata);
             }
         } catch (IOException exception) {
-            throw new ValidationException("An error to execute Field " + fieldName + " in the class " + entity);
+            throw new ValidationException("An error to execute Field " + fieldName + " in the class " + entityName);
         }
         return "";
     }

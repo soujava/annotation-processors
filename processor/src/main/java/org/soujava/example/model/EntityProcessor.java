@@ -41,10 +41,10 @@ public class EntityProcessor extends AbstractProcessor {
 
     private static final String NEW_INSTANCE = "org/soujava/example/model/newInstance.mustache";
 
-    private final Mustache newInstanceTemplate;
+    private final Mustache template;
 
     public EntityProcessor() {
-        this.newInstanceTemplate = createTemplate();
+        this.template = createTemplate();
     }
 
     private Mustache createTemplate() {
@@ -59,9 +59,9 @@ public class EntityProcessor extends AbstractProcessor {
         LOGGER.info("Starting processing Entity annotations: " + annotations);
 
         for (TypeElement annotation : annotations) {
-            for (Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
+            for (Element entity : roundEnv.getElementsAnnotatedWith(annotation)) {
                 try {
-                    processEntity(element);
+                    processEntity(entity);
                 } catch (IOException e) {
                     error(e);
                 }
@@ -70,9 +70,9 @@ public class EntityProcessor extends AbstractProcessor {
         return false;
     }
 
-    private void processEntity(Element element) throws IOException {
-        if (isTypeElement(element)) {
-            TypeElement typeElement = (TypeElement) element;
+    private void processEntity(Element entity) throws IOException {
+        if (isTypeElement(entity)) {
+            TypeElement typeElement = (TypeElement) entity;
             LOGGER.info("Processing the class: " + typeElement);
 
 
@@ -88,9 +88,9 @@ public class EntityProcessor extends AbstractProcessor {
                         .map(f -> new FieldProcessor(f, processingEnv, typeElement))
                         .map(FieldProcessor::name)
                         .collect(Collectors.toList());
-                createClass(element, metadata);
+                createClass(entity, metadata);
             } else {
-                throw new ValidationException("The class " + getSimpleNameAsString(element) + " must have at least an either public or default constructor");
+                throw new ValidationException("The class " + getSimpleNameAsString(entity) + " must have at least an either public or default constructor");
             }
 
         }
@@ -120,11 +120,11 @@ public class EntityProcessor extends AbstractProcessor {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "failed to write extension file: " + e.getMessage());
     }
 
-    private void createClass(Element element, EntityMetadata metadata) throws IOException {
+    private void createClass(Element entity, EntityMetadata metadata) throws IOException {
         Filer filer = processingEnv.getFiler();
-        JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), element);
+        JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
         try (Writer writer = fileObject.openWriter()) {
-            newInstanceTemplate.execute(writer, metadata);
+            template.execute(writer, metadata);
         }
     }
 }
