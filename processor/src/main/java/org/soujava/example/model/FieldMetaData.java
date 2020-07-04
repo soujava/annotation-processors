@@ -6,18 +6,18 @@ public class FieldMetaData {
     private final String name;
     private final String type;
     private final String entity;
-    private final String getName;
-    private final String setName;
+    private final String reader;
+    private final String writer;
 
     FieldMetaData(String packageName, String name,
                   String type, String entity,
-                  String getName, String setName) {
+                  String reader, String writer) {
         this.packageName = packageName;
         this.name = name;
         this.type = type;
         this.entity = entity;
-        this.getName = getName;
-        this.setName = setName;
+        this.reader = reader;
+        this.writer = writer;
     }
 
     public String getPackageName() {
@@ -37,11 +37,11 @@ public class FieldMetaData {
     }
 
     public String getReader() {
-        return getName;
+        return reader;
     }
 
     public String getWriter() {
-        return setName;
+        return writer;
     }
 
     public String getTargetClassNameWithPackage() {
@@ -60,8 +60,8 @@ public class FieldMetaData {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", entity='" + entity + '\'' +
-                ", getName='" + getName + '\'' +
-                ", setName='" + setName + '\'' +
+                ", getName='" + reader + '\'' +
+                ", setName='" + writer + '\'' +
                 '}';
     }
 
@@ -75,8 +75,8 @@ public class FieldMetaData {
         private String name;
         private String type;
         private String entity;
-        private String getName;
-        private String setName;
+        private String reader;
+        private String writer;
 
         private FieldMetaDataBuilder() {
         }
@@ -101,18 +101,18 @@ public class FieldMetaData {
             return this;
         }
 
-        public FieldMetaDataBuilder withGetName(String getName) {
-            this.getName = getName;
+        public FieldMetaDataBuilder withReader(String getName) {
+            this.reader = getName;
             return this;
         }
 
-        public FieldMetaDataBuilder withSetName(String setName) {
-            this.setName = setName;
+        public FieldMetaDataBuilder withWriter(String setName) {
+            this.writer = setName;
             return this;
         }
 
         public FieldMetaData build() {
-            return new FieldMetaData(packageName, name, type, entity, getName, setName);
+            return new FieldMetaData(packageName, name, type, entity, reader, writer);
         }
     }
 }

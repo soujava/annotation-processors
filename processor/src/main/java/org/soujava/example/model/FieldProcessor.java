@@ -73,8 +73,8 @@ public class FieldProcessor {
                 .withName(name)
                 .withType(className)
                 .withEntity(entity)
-                .withGetName(getMethod)
-                .withSetName(setMethod).build();
+                .withReader(getMethod)
+                .withWriter(setMethod).build();
 
         Filer filer = processingEnv.getFiler();
         try {
