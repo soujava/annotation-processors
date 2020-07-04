@@ -2,7 +2,7 @@ package org.soujava.example.model;
 
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -14,12 +14,13 @@ public class CompilerTest {
 
     @Test
     public void shouldCompile() throws IOException {
+
         Compilation compilation = javac()
                 .withClasspathFrom(Entity.class.getClassLoader())
                 .withOptions()
                 .withProcessors(new EntityProcessor())
                 .compile(
-                        JavaFileObjects.forResource("Person.java"));
+                        JavaFileObjects.forResource("Person.java"))
         assertThat(compilation).succeeded();
     }
 
@@ -30,7 +31,7 @@ public class CompilerTest {
                 .withOptions()
                 .withProcessors(new EntityProcessor())
                 .compile(
-                        JavaFileObjects.forResource("Person.java"));
-        assertThat(compilation).succeeded();
+                        JavaFileObjects.forResource("Person2.java"));
+        assertThat(compilation).failed();
     }
 }
