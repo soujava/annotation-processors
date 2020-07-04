@@ -4,17 +4,17 @@ public class FieldMetaData {
 
     private final String packageName;
     private final String name;
-    private final String className;
+    private final String type;
     private final String entity;
     private final String getName;
     private final String setName;
 
     FieldMetaData(String packageName, String name,
-                  String className, String entity,
+                  String type, String entity,
                   String getName, String setName) {
         this.packageName = packageName;
         this.name = name;
-        this.className = className;
+        this.type = type;
         this.entity = entity;
         this.getName = getName;
         this.setName = setName;
@@ -28,8 +28,8 @@ public class FieldMetaData {
         return name;
     }
 
-    public String getClassName() {
-        return className;
+    public String getType() {
+        return type;
     }
 
     public String getEntity() {
@@ -45,10 +45,10 @@ public class FieldMetaData {
     }
 
     public String getTargetClassNameWithPackage() {
-        return packageName + "." + getTargetClassName();
+        return packageName + "." + getClassName();
     }
 
-    public String getTargetClassName() {
+    public String getClassName() {
         return "Accessor" + entity + name;
     }
 
@@ -58,7 +58,7 @@ public class FieldMetaData {
         return "FieldMetaData{" +
                 "packageName='" + packageName + '\'' +
                 ", name='" + name + '\'' +
-                ", className='" + className + '\'' +
+                ", type='" + type + '\'' +
                 ", entity='" + entity + '\'' +
                 ", getName='" + getName + '\'' +
                 ", setName='" + setName + '\'' +
@@ -73,7 +73,7 @@ public class FieldMetaData {
     public static class FieldMetaDataBuilder {
         private String packageName;
         private String name;
-        private String className;
+        private String type;
         private String entity;
         private String getName;
         private String setName;
@@ -91,8 +91,8 @@ public class FieldMetaData {
             return this;
         }
 
-        public FieldMetaDataBuilder withClassName(String className) {
-            this.className = className;
+        public FieldMetaDataBuilder withType(String type) {
+            this.type = type;
             return this;
         }
 
@@ -112,7 +112,7 @@ public class FieldMetaData {
         }
 
         public FieldMetaData build() {
-            return new FieldMetaData(packageName, name, className, entity, getName, setName);
+            return new FieldMetaData(packageName, name, type, entity, getName, setName);
         }
     }
 }

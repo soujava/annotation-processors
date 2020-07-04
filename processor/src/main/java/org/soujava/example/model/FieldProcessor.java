@@ -70,7 +70,8 @@ public class FieldProcessor {
 
         FieldMetaData metadata = FieldMetaData.builder()
                 .withPackageName(packageName)
-                .withName(name).withClassName(className)
+                .withName(name)
+                .withType(className)
                 .withEntity(entity)
                 .withGetName(getMethod)
                 .withSetName(setMethod).build();
