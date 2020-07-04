@@ -18,14 +18,26 @@ import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import static javax.lang.model.element.Modifier.DEFAULT;
+import static javax.lang.model.element.Modifier.PROTECTED;
+import static javax.lang.model.element.Modifier.PUBLIC;
 
 @SupportedAnnotationTypes("org.soujava.example.model.Entity")
 public class EntityProcessor extends AbstractProcessor {
 
     private static Logger LOGGER = Logger.getLogger(EntityProcessor.class.getName());
+
+    private static final EnumSet<Modifier> MODIFIERS = EnumSet.of(PUBLIC, DEFAULT, PROTECTED);
+    private static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
+    private static final Predicate<Element> HAS_ACCESS = el -> el.getModifiers().stream().anyMatch(m -> MODIFIERS.contains(m));
+    public static final Predicate<Element> HAS_COLUMN_ANNOTATION = el -> el.getAnnotation(Column.class) != null;
+    public static final Predicate<Element> IS_FIELD = el -> el.getKind() == ElementKind.FIELD;
 
     private static final String TEMPLATE = "org/soujava/example/model/newInstance.mustache";
 
@@ -59,20 +71,21 @@ public class EntityProcessor extends AbstractProcessor {
     }
 
     private void processEntity(Element element) throws IOException {
-        EnumSet<Modifier> modifiers = EnumSet.of(Modifier.PUBLIC, Modifier.DEFAULT, Modifier.PROTECTED);
         if (isTypeElement(element)) {
             TypeElement typeElement = (TypeElement) element;
+            LOGGER.info("Processing the class: " + typeElement);
 
-            final Predicate<Element> isConstructor = el -> el.getKind() == ElementKind.CONSTRUCTOR;
-            final Predicate<Element> hasAccess = el -> el.getModifiers().stream().anyMatch(m -> modifiers.contains(m));
 
             boolean hasValidConstructor = processingEnv.getElementUtils().getAllMembers(typeElement)
                     .stream()
-                    .filter(isConstructor.and(hasAccess))
-                    .anyMatch(isConstructor.and(hasAccess));
-
+                    .filter(IS_CONSTRUCTOR.and(HAS_ACCESS))
+                    .anyMatch(IS_CONSTRUCTOR.and(HAS_ACCESS));
             if (hasValidConstructor) {
                 EntityMetadata metadata = getMetadata(typeElement);
+                final List<Element> fields = processingEnv.getElementUtils()
+                        .getAllMembers(typeElement).stream()
+                        .filter(IS_FIELD.and(HAS_COLUMN_ANNOTATION))
+                        .collect(Collectors.toList());
                 createClass(element, metadata);
             } else {
                 throw new ValidationException("The class " + getSimpleNameAsString(element) + " must have at least an either public or default constructor");
