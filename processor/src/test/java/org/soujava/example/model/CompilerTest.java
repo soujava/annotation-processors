@@ -2,6 +2,7 @@ package org.soujava.example.model;
 
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.tools.JavaFileObject;
@@ -28,12 +29,12 @@ public class CompilerTest {
 
     @Test
     public void shouldReturnConstructorIssue() throws IOException {
-        Compilation compilation = javac()
-                .withClasspathFrom(Entity.class.getClassLoader())
-                .withOptions()
-                .withProcessors(new EntityProcessor())
-                .compile(
-                        JavaFileObjects.forResource("Person2.java"));
-        assertThat(compilation).failed();
+        final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person2.java");
+        Assertions.assertThrows(RuntimeException.class, () ->
+                javac()
+                        .withClasspathFrom(Entity.class.getClassLoader())
+                        .withOptions()
+                        .withProcessors(new EntityProcessor())
+                        .compile(javaFileObject));
     }
 }

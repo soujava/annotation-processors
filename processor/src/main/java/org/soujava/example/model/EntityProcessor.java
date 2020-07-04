@@ -20,9 +20,12 @@ import java.io.Writer;
 import java.util.EnumSet;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
 @SupportedAnnotationTypes("org.soujava.example.model.Entity")
 public class EntityProcessor extends AbstractProcessor {
+
+    private static Logger LOGGER = Logger.getLogger(EntityProcessor.class.getName());
 
     private static final String TEMPLATE = "org/soujava/example/model/newInstance.mustache";
 
@@ -40,6 +43,8 @@ public class EntityProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
+
+        LOGGER.info("Starting processing Entity annotations: " + annotations);
 
         for (TypeElement annotation : annotations) {
             for (Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
