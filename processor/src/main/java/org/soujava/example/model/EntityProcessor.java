@@ -77,9 +77,11 @@ public class EntityProcessor extends AbstractProcessor {
     }
 
     private EntityMetadata getMetadata(TypeElement element) {
+        final Entity annotation = element.getAnnotation(Entity.class);
         String packageName = getPackageName(element);
         String sourceClassName = getSimpleNameAsString(element);
-        return new EntityMetadata(packageName, sourceClassName);
+        String entityName = annotation.value().isBlank() ? sourceClassName : annotation.value();
+        return new EntityMetadata(packageName, sourceClassName, entityName);
     }
 
     private String getPackageName(TypeElement classElement) {

@@ -6,9 +6,12 @@ public class EntityMetadata {
 
     private String sourceClassName;
 
-    public EntityMetadata(String packageName, String sourceClassName) {
+    private String entityName;
+
+    public EntityMetadata(String packageName, String sourceClassName, String entityName) {
         this.packageName = packageName;
         this.sourceClassName = sourceClassName;
+        this.entityName = entityName;
     }
 
     public String getPackageName() {
@@ -29,5 +32,18 @@ public class EntityMetadata {
 
     public String getTargetClassNameWithPackage() {
         return packageName + "." + getTargetClassName();
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    @Override
+    public String toString() {
+        return "EntityMetadata{" +
+                "packageName='" + packageName + '\'' +
+                ", sourceClassName='" + sourceClassName + '\'' +
+                ", entityName='" + entityName + '\'' +
+                '}';
     }
 }
