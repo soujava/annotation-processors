@@ -1,4 +1,4 @@
-package com.cloudogu.blog;
+package org.soujava.example.model;
 
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;

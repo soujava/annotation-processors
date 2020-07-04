@@ -22,24 +22,14 @@
  * SOFTWARE.
  */
 
-package com.cloudogu.blog;
 
-@JsonObject
-public class Person {
+package org.soujava.example.model;
 
-    private String username;
-    private String email;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 
-    public Person(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
+@Documented
+@Target(ElementType.TYPE)
+public @interface JsonObject {
 }

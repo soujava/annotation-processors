@@ -1,6 +1,8 @@
 package com.cloudogu.blog;
 
 
+import org.soujava.example.model.JsonObject;
+
 @JsonObject
 public class Person {
 

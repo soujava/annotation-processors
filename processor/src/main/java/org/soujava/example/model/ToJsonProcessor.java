@@ -23,7 +23,7 @@
  */
 
 
-package com.cloudogu.blog;
+package org.soujava.example.model;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 @SupportedAnnotationTypes("com.cloudogu.blog.JsonObject")
 public class ToJsonProcessor extends AbstractProcessor {
 
-    private static final String TEMPLATE = "com/cloudogu/blog/jsonwriter.mustache";
+    private static final String TEMPLATE = "org/soujava/example/model/jsonwriter.mustache";
 
     private final Mustache template;
 

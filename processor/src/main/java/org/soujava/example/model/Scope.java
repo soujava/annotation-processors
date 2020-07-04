@@ -23,7 +23,7 @@
  */
 
 
-package com.cloudogu.blog;
+package org.soujava.example.model;
 
 import com.github.mustachejava.util.DecoratedCollection;
 
