@@ -39,7 +39,7 @@ public class FieldProcessor {
         this.template = createTemplate();
     }
 
-    public String name() {
+    public String name() throws IOException {
 
 
         final String fieldName = field.getSimpleName().toString();
@@ -79,13 +79,9 @@ public class FieldProcessor {
                 .withWriter(setMethod).build();
 
         Filer filer = processingEnv.getFiler();
-        try {
-            JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
-            try (Writer writer = fileObject.openWriter()) {
-                template.execute(writer, metadata);
-            }
-        } catch (IOException exception) {
-            throw new ValidationException("An error to execute Field " + fieldName + " in the class " + entityName);
+        JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
+        try (Writer writer = fileObject.openWriter()) {
+            template.execute(writer, metadata);
         }
         return "";
     }
