@@ -5,15 +5,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cloudogu.blog</groupId>
-    <version>1.0.0</version>
-    <artifactId>tojson-lib</artifactId>
-
-
-    <properties>
-        <truth.version>0.45</truth.version>
-    </properties>
-
+    <parent>
+         <groupId>org.soujava.example</groupId>
+         <artifactId>parent</artifactId>
+         <version>1.0.0</version>
+    </parent>
+    <artifactId>processor</artifactId>
 
     <dependencies>
         <dependency>

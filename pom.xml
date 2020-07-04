@@ -5,14 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cloudogu.blog</groupId>
-    <artifactId>tojson</artifactId>
+    <groupId>org.soujava.example</groupId>
+    <artifactId>parent</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>tojson-lib</module>
-        <module>tojson-example</module>
+        <module>processor</module>
+        <module>model</module>
     </modules>
 
     <build>
