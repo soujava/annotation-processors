@@ -17,7 +17,7 @@ public class PersonTest {
         Compilation compilation = javac()
                 .withClasspathFrom(JsonObject.class.getClassLoader())
                 .withOptions()
-                .withProcessors(new ToJsonProcessor())
+                .withProcessors(new EntityProcessor())
                 .compile(
                         JavaFileObjects.forResource("Person.java"));
         assertThat(compilation).succeeded();

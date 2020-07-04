@@ -1,9 +1,9 @@
 package com.cloudogu.blog;
 
 
-import org.soujava.example.model.JsonObject;
+import org.soujava.example.model.Entity;
 
-@JsonObject
+@Entity
 public class Person {
 
     private String name;
