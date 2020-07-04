@@ -10,8 +10,8 @@ public class FieldMetaData {
     private final String setName;
 
     FieldMetaData(String packageName, String name,
-                         String className, String entity,
-                         String getName, String setName) {
+                  String className, String entity,
+                  String getName, String setName) {
         this.packageName = packageName;
         this.name = name;
         this.className = className;
@@ -54,5 +54,55 @@ public class FieldMetaData {
                 ", getName='" + getName + '\'' +
                 ", setName='" + setName + '\'' +
                 '}';
+    }
+
+    public static FieldMetaDataBuilder builder() {
+        return new FieldMetaDataBuilder();
+    }
+
+    public static class FieldMetaDataBuilder {
+        private String packageName;
+        private String name;
+        private String className;
+        private String entity;
+        private String getName;
+        private String setName;
+
+        private FieldMetaDataBuilder() {
+        }
+
+        public FieldMetaDataBuilder withPackageName(String packageName) {
+            this.packageName = packageName;
+            return this;
+        }
+
+        public FieldMetaDataBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public FieldMetaDataBuilder withClassName(String className) {
+            this.className = className;
+            return this;
+        }
+
+        public FieldMetaDataBuilder withEntity(String entity) {
+            this.entity = entity;
+            return this;
+        }
+
+        public FieldMetaDataBuilder withGetName(String getName) {
+            this.getName = getName;
+            return this;
+        }
+
+        public FieldMetaDataBuilder withSetName(String setName) {
+            this.setName = setName;
+            return this;
+        }
+
+        public FieldMetaData build() {
+            return new FieldMetaData(packageName, name, className, entity, getName, setName);
+        }
     }
 }

@@ -64,12 +64,12 @@ public class FieldProcessor {
                 .filter(hasSetterName.or(hasIsName))
                 .findFirst().orElseThrow(() -> new ValidationException("There is not valid setter method to the field: "
                         + fieldName + " in the class: " + packageName + "." + entity));
-        FieldMetaData fieldMetaData = new FieldMetaDataBuilder()
+        FieldMetaData fieldMetaData = FieldMetaData.builder()
                 .withPackageName(packageName)
                 .withName(name).withClassName(className)
                 .withEntity(entity)
                 .withGetName(getMethod)
-                .withSetName(setMethod).createFieldMetaData();
+                .withSetName(setMethod).build();
     }
 
     private String capitalize(String name) {
