@@ -39,17 +39,17 @@ public class EntityProcessor extends AbstractProcessor {
     public static final Predicate<Element> HAS_COLUMN_ANNOTATION = el -> el.getAnnotation(Column.class) != null;
     public static final Predicate<Element> IS_FIELD = el -> el.getKind() == ElementKind.FIELD;
 
-    private static final String TEMPLATE = "org/soujava/example/model/newInstance.mustache";
+    private static final String NEW_INSTANCE = "org/soujava/example/model/newInstance.mustache";
 
-    private final Mustache template;
+    private final Mustache newInstanceTemplate;
 
     public EntityProcessor() {
-        this.template = createTemplate();
+        this.newInstanceTemplate = createTemplate();
     }
 
     private Mustache createTemplate() {
         MustacheFactory factory = new DefaultMustacheFactory();
-        return factory.compile(TEMPLATE);
+        return factory.compile(NEW_INSTANCE);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class EntityProcessor extends AbstractProcessor {
         Filer filer = processingEnv.getFiler();
         JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), element);
         try (Writer writer = fileObject.openWriter()) {
-            template.execute(writer, metadata);
+            newInstanceTemplate.execute(writer, metadata);
         }
     }
 }
