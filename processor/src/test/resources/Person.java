@@ -1,4 +1,4 @@
-package com.cloudogu.blog;
+package org.soujava.example.model;
 
 
 import org.soujava.example.model.Entity;

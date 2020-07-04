@@ -25,10 +25,15 @@
 package org.soujava.example.model;
 
 @JsonObject
+@Entity
 public class Person {
 
     private String username;
+
     private String email;
+
+    public Person() {
+    }
 
     public Person(String username, String email) {
         this.username = username;

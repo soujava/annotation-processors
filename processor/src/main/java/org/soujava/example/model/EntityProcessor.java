@@ -36,6 +36,7 @@ public class EntityProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
+
         for (TypeElement annotation : annotations) {
             for (Element element : roundEnv.getElementsAnnotatedWith(annotation)) {
                 try {
@@ -51,15 +52,15 @@ public class EntityProcessor extends AbstractProcessor {
     private void processEntity(Element element) throws IOException {
         if (isTypeElement(element)) {
             TypeElement typeElement = (TypeElement) element;
-            Scope scope = createModel(typeElement);
+            EntityMetadata scope = createModel(typeElement);
             writeJsonWriterClass(element, scope);
         }
     }
 
-    private Scope createModel(TypeElement element) {
+    private EntityMetadata createModel(TypeElement element) {
         String packageName = getPackageName(element);
         String sourceClassName = getSimpleNameAsString(element);
-        return new Scope(packageName, sourceClassName);
+        return new EntityMetadata(packageName, sourceClassName);
     }
 
     private String getPackageName(TypeElement classElement) {
@@ -78,11 +79,11 @@ public class EntityProcessor extends AbstractProcessor {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "failed to write extension file: " + e.getMessage());
     }
 
-    private void writeJsonWriterClass(Element element, Scope scope) throws IOException {
+    private void writeJsonWriterClass(Element element, EntityMetadata metadata) throws IOException {
         Filer filer = processingEnv.getFiler();
-        JavaFileObject fileObject = filer.createSourceFile(scope.getTargetClassNameWithPackage(), element);
+        JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), element);
         try (Writer writer = fileObject.openWriter()) {
-            template.execute(writer, scope);
+            template.execute(writer, metadata);
         }
     }
 }
