@@ -1,1 +1,2 @@
 org.soujava.example.model.ToJsonProcessor
+org.soujava.example.model.EntityProcessor
