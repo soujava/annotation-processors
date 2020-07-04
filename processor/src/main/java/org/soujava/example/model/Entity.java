@@ -8,4 +8,5 @@ import java.lang.annotation.Target;
 @Documented
 @Target(ElementType.TYPE)
 public @interface Entity {
+    String value() default "";
 }

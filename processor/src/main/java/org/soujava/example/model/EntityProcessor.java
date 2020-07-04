@@ -70,7 +70,7 @@ public class EntityProcessor extends AbstractProcessor {
                 EntityMetadata metadata = getMetadata(typeElement);
                 createClass(element, metadata);
             } else {
-                throw new ValidationException("The class must have at least a either public or default constructor");
+                throw new ValidationException("The class " + getSimpleNameAsString(element) + " must have at least an either public or default constructor");
             }
 
         }

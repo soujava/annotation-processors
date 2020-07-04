@@ -3,7 +3,7 @@ package org.soujava.example.model;
 
 import org.soujava.example.model.Entity;
 
-@Entity
+@Entity("table")
 public class Person {
 
     private String name;
