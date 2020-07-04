@@ -37,4 +37,17 @@ public class CompilerTest {
                         .withProcessors(new EntityProcessor())
                         .compile(javaFileObject));
     }
+
+    @Test
+    public void shouldCheckColumnCompile() throws IOException {
+
+        final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person3.java");
+
+        Compilation compilation = javac()
+                .withClasspathFrom(Entity.class.getClassLoader())
+                .withOptions()
+                .withProcessors(new EntityProcessor())
+                .compile(javaFileObject);
+        assertThat(compilation).succeeded();
+    }
 }
