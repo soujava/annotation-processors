@@ -44,6 +44,15 @@ public class FieldMetaData {
         return setName;
     }
 
+    public String getTargetClassNameWithPackage() {
+        return packageName + "." + getTargetClassName();
+    }
+
+    public String getTargetClassName() {
+        return "Accessor" + entity + name;
+    }
+
+
     @Override
     public String toString() {
         return "FieldMetaData{" +
@@ -59,6 +68,7 @@ public class FieldMetaData {
     public static FieldMetaDataBuilder builder() {
         return new FieldMetaDataBuilder();
     }
+
 
     public static class FieldMetaDataBuilder {
         private String packageName;

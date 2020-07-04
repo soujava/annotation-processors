@@ -4,14 +4,19 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
+import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.tools.JavaFileObject;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static java.util.Locale.ENGLISH;
@@ -57,19 +62,34 @@ public class FieldProcessor {
         final String getMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
                 .filter(hasGetterName)
-                .findFirst().orElseThrow(() -> new ValidationException("There is not valid setter method to the field: "
-                        + fieldName + " in the class: " + packageName + "." + entity));
+                .findFirst().orElseThrow(generateGetterError(fieldName, packageName, entity, "There is not valid getter method to the field: "));
         final String setMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
                 .filter(hasSetterName.or(hasIsName))
-                .findFirst().orElseThrow(() -> new ValidationException("There is not valid setter method to the field: "
-                        + fieldName + " in the class: " + packageName + "." + entity));
-        FieldMetaData fieldMetaData = FieldMetaData.builder()
+                .findFirst().orElseThrow(generateGetterError(fieldName, packageName, entity, "There is not valid setter method to the field: "));
+
+        FieldMetaData metadata = FieldMetaData.builder()
                 .withPackageName(packageName)
                 .withName(name).withClassName(className)
                 .withEntity(entity)
                 .withGetName(getMethod)
                 .withSetName(setMethod).build();
+
+        Filer filer = processingEnv.getFiler();
+        try {
+            JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage());
+            try (Writer writer = fileObject.openWriter()) {
+                template.execute(writer, metadata);
+            }
+        } catch (IOException exception) {
+            throw new ValidationException("An error to execute Field " + fieldName + " in the class " + entity);
+        }
+        return "";
+    }
+
+    private Supplier<ValidationException> generateGetterError(String fieldName, String packageName, String entity, String s) {
+        return () -> new ValidationException(s
+                + fieldName + " in the class: " + packageName + "." + entity);
     }
 
     private String capitalize(String name) {
