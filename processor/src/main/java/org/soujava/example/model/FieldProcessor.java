@@ -9,10 +9,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.TypeMirror;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -68,7 +64,12 @@ public class FieldProcessor {
                 .filter(hasSetterName.or(hasIsName))
                 .findFirst().orElseThrow(() -> new ValidationException("There is not valid setter method to the field: "
                         + fieldName + " in the class: " + packageName + "." + entity));
-        FieldMetaData fieldMetaData = new FieldMetaData(packageName, name, className, entity, getMethod, setMethod);
+        FieldMetaData fieldMetaData = new FieldMetaDataBuilder()
+                .withPackageName(packageName)
+                .withName(name).withClassName(className)
+                .withEntity(entity)
+                .withGetName(getMethod)
+                .withSetName(setMethod).createFieldMetaData();
     }
 
     private String capitalize(String name) {
