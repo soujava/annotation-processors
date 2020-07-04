@@ -28,8 +28,10 @@ package org.soujava.example.model;
 @Entity
 public class Person {
 
+    @Column("native")
     private String username;
 
+    @Column
     private String email;
 
     public Person() {
@@ -46,5 +48,13 @@ public class Person {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
