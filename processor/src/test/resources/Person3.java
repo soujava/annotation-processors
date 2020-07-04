@@ -2,6 +2,7 @@ package org.soujava.example.model;
 
 
 import org.soujava.example.model.Entity;
+import org.soujava.example.model.Column;
 
 @Entity("table")
 public class Person3 {

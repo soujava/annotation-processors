@@ -35,7 +35,7 @@ public class EntityProcessor extends AbstractProcessor {
 
     private static final EnumSet<Modifier> MODIFIERS = EnumSet.of(PUBLIC, DEFAULT, PROTECTED);
     private static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
-    private static final Predicate<Element> HAS_ACCESS = el -> el.getModifiers().stream().anyMatch(m -> MODIFIERS.contains(m));
+    static final Predicate<Element> HAS_ACCESS = el -> el.getModifiers().stream().anyMatch(m -> MODIFIERS.contains(m));
     public static final Predicate<Element> HAS_COLUMN_ANNOTATION = el -> el.getAnnotation(Column.class) != null;
     public static final Predicate<Element> IS_FIELD = el -> el.getKind() == ElementKind.FIELD;
 
