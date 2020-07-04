@@ -9,13 +9,17 @@ import javax.annotation.processing.Filer;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.EnumSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 @SupportedAnnotationTypes("org.soujava.example.model.Entity")
 public class EntityProcessor extends AbstractProcessor {
@@ -50,14 +54,29 @@ public class EntityProcessor extends AbstractProcessor {
     }
 
     private void processEntity(Element element) throws IOException {
+        EnumSet<Modifier> modifiers = EnumSet.of(Modifier.PUBLIC, Modifier.DEFAULT, Modifier.PROTECTED);
         if (isTypeElement(element)) {
             TypeElement typeElement = (TypeElement) element;
-            EntityMetadata scope = createModel(typeElement);
-            writeJsonWriterClass(element, scope);
+
+            final Predicate<Element> isConstructor = el -> el.getKind() == ElementKind.CONSTRUCTOR;
+            final Predicate<Element> hasAccess = el -> el.getModifiers().stream().anyMatch(m -> modifiers.contains(m));
+
+            boolean hasValidConstructor = processingEnv.getElementUtils().getAllMembers(typeElement)
+                    .stream()
+                    .filter(isConstructor.and(hasAccess))
+                    .anyMatch(isConstructor.and(hasAccess));
+
+            if (hasValidConstructor) {
+                EntityMetadata metadata = getMetadata(typeElement);
+                createClass(element, metadata);
+            } else {
+                throw new ValidationException("The class must have at least a either public or default constructor");
+            }
+
         }
     }
 
-    private EntityMetadata createModel(TypeElement element) {
+    private EntityMetadata getMetadata(TypeElement element) {
         String packageName = getPackageName(element);
         String sourceClassName = getSimpleNameAsString(element);
         return new EntityMetadata(packageName, sourceClassName);
@@ -79,7 +98,7 @@ public class EntityProcessor extends AbstractProcessor {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "failed to write extension file: " + e.getMessage());
     }
 
-    private void writeJsonWriterClass(Element element, EntityMetadata metadata) throws IOException {
+    private void createClass(Element element, EntityMetadata metadata) throws IOException {
         Filer filer = processingEnv.getFiler();
         JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), element);
         try (Writer writer = fileObject.openWriter()) {

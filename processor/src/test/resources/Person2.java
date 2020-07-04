@@ -1,8 +1,10 @@
 package org.soujava.example.model;
 
 
-@JsonObject
-public class Person {
+import org.soujava.example.model.Entity;
+
+@Entity
+public class Person2 {
 
     private String name;
 
@@ -13,6 +15,8 @@ public class Person {
     public void setName(String name) {
         this.name = name;
     }
+
+    private Person2() {}
 
     @Override
     public String toString() {
