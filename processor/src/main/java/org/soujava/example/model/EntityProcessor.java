@@ -82,9 +82,11 @@ public class EntityProcessor extends AbstractProcessor {
                     .anyMatch(IS_CONSTRUCTOR.and(HAS_ACCESS));
             if (hasValidConstructor) {
                 EntityMetadata metadata = getMetadata(typeElement);
-                final List<Element> fields = processingEnv.getElementUtils()
+                final List<String> names = processingEnv.getElementUtils()
                         .getAllMembers(typeElement).stream()
                         .filter(IS_FIELD.and(HAS_COLUMN_ANNOTATION))
+                        .map(f -> new FieldProcessor(f, processingEnv, typeElement))
+                        .map(FieldProcessor::name)
                         .collect(Collectors.toList());
                 createClass(element, metadata);
             } else {

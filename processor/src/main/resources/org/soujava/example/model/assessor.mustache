@@ -1,17 +1,20 @@
 package {{packageName}};
 
 
-public final class {{targetClassName}} {
+public final class {{className}} {
 
-  private {{targetClassName}}() {
-  }
 
-  public String getEntityName() {
-    return "{{entityName}}";
+  public String getName() {
+    return "{{name}}";
  }
 
-  public static {{sourceClassName}} newInstance() {
-    return new {{sourceClassName}}();
-  }
+ public Object getValue({{entity}} object) {
+    return object.{{getName}}();
+}
+
+public void setValue({{entity}} object, Object value) {
+    object.{{setName}}(({{entity}})value);
+}
+
 
 }
