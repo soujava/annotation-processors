@@ -44,6 +44,9 @@ public class FieldProcessor {
         final String fieldName = field.getSimpleName().toString();
         final Predicate<Element> validName = el -> el.getSimpleName().toString()
                 .contains(capitalize(fieldName));
+        final Predicate<String> hasGetterName = el -> el.equals("get" + capitalize(fieldName));
+        final Predicate<String> hasSetterName = el -> el.equals("set" + capitalize(fieldName));
+        final Predicate<String> hasIsName = el -> el.equals("is" + capitalize(fieldName));
 
         final List<Element> accessors = processingEnv.getElementUtils()
                 .getAllMembers(entity).stream()
@@ -55,11 +58,17 @@ public class FieldProcessor {
         final String entity = getSimpleNameAsString(this.entity);//
         final String name = column.value().isBlank() ? getSimpleNameAsString(field) : fieldName;
         final String className = field.asType().toString();//column type
-        final String getName = accessors.stream()
+        final String getMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
-                .filter(el -> el..equals("get"+ capitalize(fieldName)))
-        final String setName;
-        return null;
+                .filter(hasGetterName)
+                .findFirst().orElseThrow(() -> new ValidationException("There is not valid setter method to the field: "
+                        + fieldName + " in the class: " + packageName + "." + entity));
+        final String setMethod = accessors.stream()
+                .map(ELEMENT_TO_STRING)
+                .filter(hasSetterName.or(hasIsName))
+                .findFirst().orElseThrow(() -> new ValidationException("There is not valid setter method to the field: "
+                        + fieldName + " in the class: " + packageName + "." + entity));
+        FieldMetaData fieldMetaData = new FieldMetaData(packageName, name, className, entity, getMethod, setMethod);
     }
 
     private String capitalize(String name) {
