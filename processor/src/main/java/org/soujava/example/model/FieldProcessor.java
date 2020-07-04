@@ -42,11 +42,25 @@ public class FieldProcessor {
     public String name() {
         FieldMetaData metadata = getMetaData();
         Filer filer = processingEnv.getFiler();
-        JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
+        JavaFileObject fileObject = getFileObject(metadata, filer);
         try (Writer writer = fileObject.openWriter()) {
             template.execute(writer, metadata);
+        } catch (IOException exception) {
+            throw new ValidationException("An error to compile the class: " +
+                    metadata.getTargetClassNameWithPackage(), exception);
         }
+
         return "";
+    }
+
+    private JavaFileObject getFileObject(FieldMetaData metadata, Filer filer) {
+        try {
+            return filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
+        }catch (IOException exception) {
+            throw new ValidationException("An error to create the class: " +
+                    metadata.getTargetClassNameWithPackage(), exception);
+        }
+
     }
 
     private FieldMetaData getMetaData() {
