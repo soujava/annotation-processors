@@ -8,16 +8,21 @@ public class FieldModel {
     private final String entity;
     private final String reader;
     private final String writer;
+    private final String fieldName;
+    private final boolean id;
 
     FieldModel(String packageName, String name,
                String type, String entity,
-               String reader, String writer) {
+               String reader, String writer, String fieldName,
+               boolean id) {
         this.packageName = packageName;
         this.name = name;
         this.type = type;
         this.entity = entity;
         this.reader = reader;
         this.writer = writer;
+        this.fieldName = fieldName;
+        this.id = id;
     }
 
     public String getPackageName() {
@@ -52,16 +57,25 @@ public class FieldModel {
         return entity + ProcessorUtil.capitalize(name) + "FieldMetaData";
     }
 
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public boolean isId() {
+        return id;
+    }
 
     @Override
     public String toString() {
-        return "FieldMetaData{" +
+        return "FieldModel{" +
                 "packageName='" + packageName + '\'' +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", entity='" + entity + '\'' +
-                ", getName='" + reader + '\'' +
-                ", setName='" + writer + '\'' +
+                ", reader='" + reader + '\'' +
+                ", writer='" + writer + '\'' +
+                ", fieldName='" + fieldName + '\'' +
+                ", id=" + id +
                 '}';
     }
 
@@ -77,6 +91,8 @@ public class FieldModel {
         private String entity;
         private String reader;
         private String writer;
+        private String fieldName;
+        private boolean id;
 
         private FieldMetaDataBuilder() {
         }
@@ -111,8 +127,18 @@ public class FieldModel {
             return this;
         }
 
+        public FieldMetaDataBuilder withFieldName(String fieldName) {
+            this.fieldName = fieldName;
+            return this;
+        }
+
+        public FieldMetaDataBuilder withId(boolean id) {
+            this.id = id;
+            return this;
+        }
+
         public FieldModel build() {
-            return new FieldModel(packageName, name, type, entity, reader, writer);
+            return new FieldModel(packageName, name, type, entity, reader, writer, fieldName, id);
         }
     }
 }
