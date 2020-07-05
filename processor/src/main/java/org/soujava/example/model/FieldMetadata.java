@@ -10,6 +10,8 @@ public interface FieldMetadata {
 
     void write(Object bean, Object value);
 
+    Object read(Object bean);
+
     Class<?> getType();
 
 }
