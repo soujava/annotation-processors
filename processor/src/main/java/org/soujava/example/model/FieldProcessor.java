@@ -8,7 +8,6 @@ import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
@@ -19,7 +18,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static java.util.Locale.ENGLISH;
 import static org.soujava.example.model.ProcessorUtil.capitalize;
 import static org.soujava.example.model.ProcessorUtil.getPackageName;
 import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
@@ -80,6 +78,7 @@ public class FieldProcessor {
                 .collect(Collectors.toList());
 
         Column column = field.getAnnotation(Column.class);
+        Id id = field.getAnnotation(Id.class);
         final String packageName = getPackageName(entity);
         final String entityName = getSimpleNameAsString(this.entity);//
         final String name = column.value().isBlank() ? getSimpleNameAsString(field) : fieldName;
@@ -101,7 +100,9 @@ public class FieldProcessor {
                 .withType(className)
                 .withEntity(entityName)
                 .withReader(getMethod)
-                .withWriter(setMethod).build();
+                .withWriter(setMethod)
+                .withFieldName(fieldName)
+                .build();
     }
 
     private Supplier<ValidationException> generateGetterError(String fieldName, String packageName, String entity, String s) {

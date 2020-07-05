@@ -39,6 +39,8 @@ public class EntityProcessor extends AbstractProcessor {
     private static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
     static final Predicate<Element> HAS_ACCESS = el -> el.getModifiers().stream().anyMatch(m -> MODIFIERS.contains(m));
     public static final Predicate<Element> HAS_COLUMN_ANNOTATION = el -> el.getAnnotation(Column.class) != null;
+    public static final Predicate<Element> HAS_ID_ANNOTATION = el -> el.getAnnotation(Id.class) != null;
+    public static final Predicate<Element> HAS_ANNOTATION = HAS_COLUMN_ANNOTATION.or(HAS_ID_ANNOTATION);
     public static final Predicate<Element> IS_FIELD = el -> el.getKind() == ElementKind.FIELD;
 
     private static final String NEW_INSTANCE = "org/soujava/example/model/newInstance.mustache";
@@ -86,7 +88,7 @@ public class EntityProcessor extends AbstractProcessor {
                 EntityModel metadata = getMetadata(typeElement);
                 final List<String> names = processingEnv.getElementUtils()
                         .getAllMembers(typeElement).stream()
-                        .filter(IS_FIELD.and(HAS_COLUMN_ANNOTATION))
+                        .filter(IS_FIELD.and(HAS_ANNOTATION))
                         .map(f -> new FieldProcessor(f, processingEnv, typeElement))
                         .map(FieldProcessor::name)
                         .collect(Collectors.toList());
