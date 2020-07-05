@@ -65,6 +65,20 @@ public class CompilerTest {
     }
 
     @Test
+    public void shouldGetTheGenericInformation() {
+
+        final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person6.java");
+
+        Compilation compilation = javac()
+                .withClasspathFrom(Entity.class.getClassLoader())
+                .withOptions()
+                .withProcessors(new EntityProcessor())
+                .compile(javaFileObject);
+        assertThat(compilation).succeeded();
+    }
+
+
+    @Test
     public void shouldReturnAccessorIssue()  {
         final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person4.java");
         Assertions.assertThrows(RuntimeException.class, () ->

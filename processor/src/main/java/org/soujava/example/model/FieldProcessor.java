@@ -9,9 +9,13 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
+import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -77,13 +81,27 @@ public class FieldProcessor {
                 .filter(validName.and(IS_METHOD).and(EntityProcessor.HAS_ACCESS))
                 .collect(Collectors.toList());
 
+        final TypeMirror typeMirror = field.asType();
+        String className = null;
+        final List<String> typeArguments;
+        if (typeMirror instanceof DeclaredType) {
+            DeclaredType declaredType = (DeclaredType) typeMirror;
+            typeArguments = declaredType.getTypeArguments().stream()
+                    .map(TypeMirror::toString)
+                    .collect(Collectors.toList());
+
+        } else {
+            className = typeMirror.toString();
+            typeArguments = Collections.emptyList();
+        }
+
         Column column = field.getAnnotation(Column.class);
         Id id = field.getAnnotation(Id.class);
         final boolean isId = id != null;
         final String packageName = getPackageName(entity);
         final String entityName = getSimpleNameAsString(this.entity);
         final String name = getName(fieldName, column, id);
-        final String className = field.asType().toString();
+
         final String getMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
                 .filter(hasGetterName)
