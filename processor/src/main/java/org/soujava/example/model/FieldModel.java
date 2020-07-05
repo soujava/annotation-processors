@@ -1,6 +1,6 @@
 package org.soujava.example.model;
 
-public class FieldMetaData {
+public class FieldModel {
 
     private final String packageName;
     private final String name;
@@ -9,9 +9,9 @@ public class FieldMetaData {
     private final String reader;
     private final String writer;
 
-    FieldMetaData(String packageName, String name,
-                  String type, String entity,
-                  String reader, String writer) {
+    FieldModel(String packageName, String name,
+               String type, String entity,
+               String reader, String writer) {
         this.packageName = packageName;
         this.name = name;
         this.type = type;
@@ -111,8 +111,8 @@ public class FieldMetaData {
             return this;
         }
 
-        public FieldMetaData build() {
-            return new FieldMetaData(packageName, name, type, entity, reader, writer);
+        public FieldModel build() {
+            return new FieldModel(packageName, name, type, entity, reader, writer);
         }
     }
 }

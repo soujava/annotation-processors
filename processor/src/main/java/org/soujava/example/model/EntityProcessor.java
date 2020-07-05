@@ -81,7 +81,7 @@ public class EntityProcessor extends AbstractProcessor {
                     .filter(IS_CONSTRUCTOR.and(HAS_ACCESS))
                     .anyMatch(IS_CONSTRUCTOR.and(HAS_ACCESS));
             if (hasValidConstructor) {
-                EntityMetadata metadata = getMetadata(typeElement);
+                EntityModel metadata = getMetadata(typeElement);
                 final List<String> names = processingEnv.getElementUtils()
                         .getAllMembers(typeElement).stream()
                         .filter(IS_FIELD.and(HAS_COLUMN_ANNOTATION))
@@ -96,12 +96,12 @@ public class EntityProcessor extends AbstractProcessor {
         }
     }
 
-    private EntityMetadata getMetadata(TypeElement element) {
+    private EntityModel getMetadata(TypeElement element) {
         final Entity annotation = element.getAnnotation(Entity.class);
         String packageName = getPackageName(element);
         String sourceClassName = getSimpleNameAsString(element);
         String entityName = annotation.value().isBlank() ? sourceClassName : annotation.value();
-        return new EntityMetadata(packageName, sourceClassName, entityName);
+        return new EntityModel(packageName, sourceClassName, entityName);
     }
 
     private String getPackageName(TypeElement classElement) {
@@ -120,7 +120,7 @@ public class EntityProcessor extends AbstractProcessor {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "failed to write extension file: " + e.getMessage());
     }
 
-    private void createClass(Element entity, EntityMetadata metadata) throws IOException {
+    private void createClass(Element entity, EntityModel metadata) throws IOException {
         Filer filer = processingEnv.getFiler();
         JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
         try (Writer writer = fileObject.openWriter()) {

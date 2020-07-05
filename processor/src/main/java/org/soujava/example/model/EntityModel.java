@@ -1,6 +1,6 @@
 package org.soujava.example.model;
 
-public class EntityMetadata {
+public class EntityModel {
 
     private String packageName;
 
@@ -8,7 +8,7 @@ public class EntityMetadata {
 
     private String entityName;
 
-    public EntityMetadata(String packageName, String sourceClassName, String entityName) {
+    public EntityModel(String packageName, String sourceClassName, String entityName) {
         this.packageName = packageName;
         this.sourceClassName = sourceClassName;
         this.entityName = entityName;

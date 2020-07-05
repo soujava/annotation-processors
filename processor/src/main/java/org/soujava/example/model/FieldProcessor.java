@@ -40,7 +40,7 @@ public class FieldProcessor {
     }
 
     public String name() {
-        FieldMetaData metadata = getMetaData();
+        FieldModel metadata = getMetaData();
         Filer filer = processingEnv.getFiler();
         JavaFileObject fileObject = getFileObject(metadata, filer);
         try (Writer writer = fileObject.openWriter()) {
@@ -53,7 +53,7 @@ public class FieldProcessor {
         return "";
     }
 
-    private JavaFileObject getFileObject(FieldMetaData metadata, Filer filer) {
+    private JavaFileObject getFileObject(FieldModel metadata, Filer filer) {
         try {
             return filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
         }catch (IOException exception) {
@@ -63,7 +63,7 @@ public class FieldProcessor {
 
     }
 
-    private FieldMetaData getMetaData() {
+    private FieldModel getMetaData() {
         final String fieldName = field.getSimpleName().toString();
         final Predicate<Element> validName = el -> el.getSimpleName().toString()
                 .contains(capitalize(fieldName));
@@ -92,7 +92,7 @@ public class FieldProcessor {
                 .findFirst().orElseThrow(generateGetterError(fieldName, packageName, entityName,
                         "There is not valid setter method to the field: "));
 
-        return FieldMetaData.builder()
+        return FieldModel.builder()
                 .withPackageName(packageName)
                 .withName(name)
                 .withType(className)
