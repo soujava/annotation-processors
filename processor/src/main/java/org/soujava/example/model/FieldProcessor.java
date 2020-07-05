@@ -82,7 +82,7 @@ public class FieldProcessor {
         final boolean isId = id != null;
         final String packageName = getPackageName(entity);
         final String entityName = getSimpleNameAsString(this.entity);
-        final String name = column.value().isBlank() ? getSimpleNameAsString(field) : fieldName;
+        final String name = getName(fieldName, column, id);
         final String className = field.asType().toString();
         final String getMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
@@ -105,6 +105,14 @@ public class FieldProcessor {
                 .withFieldName(fieldName)
                 .withId(isId)
                 .build();
+    }
+
+    private String getName(String fieldName, Column column, Id id) {
+        if (id == null) {
+            return column.value().isBlank() ? getSimpleNameAsString(field) : column.value();
+        } else {
+            return id.value().isBlank() ? getSimpleNameAsString(field) : id.value();
+        }
     }
 
     private Supplier<ValidationException> generateGetterError(String fieldName, String packageName, String entity, String s) {
