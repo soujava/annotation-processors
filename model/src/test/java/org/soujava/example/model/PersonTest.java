@@ -17,13 +17,13 @@ public class PersonTest {
     public void shouldGetter() {
         Person person = PersonNewInstance.newInstance();
         person.setEmail("otavio");
-        Assertions.assertEquals("otavio", new AccessorPersonemail().getValue(person));
+        Assertions.assertEquals("otavio", new PersonEmailMetaData().getValue(person));
     }
 
     @Test
     public void shouldSetter() {
         Person person = PersonNewInstance.newInstance();
-        new AccessorPersonemail().setValue(person, "otavio");
-        Assertions.assertEquals("otavio", new AccessorPersonemail().getValue(person));
+        new PersonEmailMetaData().setValue(person, "otavio");
+        Assertions.assertEquals("otavio", new PersonEmailMetaData().getValue(person));
     }
 }
