@@ -4,17 +4,27 @@ package {{packageName}};
 public final class {{className}} {
 
 
+   public boolean isId() {
+    return {{id}};
+  }
   public String getName() {
     return "{{name}}";
+  }
+
+   public String getFieldName() {
+    return "{{fieldName}}";
+  }
+
+  public Object getValue({{entity}} object) {
+    return object.{{reader}}();
+  }
+
+ public void setValue({{entity}} object, Object value) {
+   object.{{writer}}(({{type}})value);
  }
 
- public Object getValue({{entity}} object) {
-    return object.{{reader}}();
-}
-
-public void setValue({{entity}} object, Object value) {
-    object.{{writer}}(({{type}})value);
-}
-
+  public Class<?> getType()  {
+   return {{type}}.class;
+  }
 
 }
