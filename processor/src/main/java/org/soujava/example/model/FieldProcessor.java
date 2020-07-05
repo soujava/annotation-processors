@@ -23,7 +23,7 @@ import static java.util.Locale.ENGLISH;
 
 public class FieldProcessor {
 
-    private static final String TEMPLATE = "org/soujava/example/model/assessor.mustache";
+    private static final String TEMPLATE = "org/soujava/example/model/fieldmetadata.mustache";
     private static final Predicate<Element> IS_METHOD = el -> el.getKind() == ElementKind.METHOD;
     public static final Function<Element, String> ELEMENT_TO_STRING = el -> el.getSimpleName().toString();
     private final Element field;
