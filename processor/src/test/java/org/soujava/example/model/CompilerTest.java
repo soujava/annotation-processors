@@ -50,4 +50,15 @@ public class CompilerTest {
                 .compile(javaFileObject);
         assertThat(compilation).succeeded();
     }
+
+    @Test
+    public void shouldReturnAccessorIssue() throws IOException {
+        final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person4.java");
+        Assertions.assertThrows(RuntimeException.class, () ->
+                javac()
+                        .withClasspathFrom(Entity.class.getClassLoader())
+                        .withOptions()
+                        .withProcessors(new EntityProcessor())
+                        .compile(javaFileObject));
+    }
 }
