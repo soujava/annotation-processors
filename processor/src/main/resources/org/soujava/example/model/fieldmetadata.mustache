@@ -20,18 +20,14 @@ public final class {{className}} implements FieldMetadata {
     return "{{fieldName}}";
   }
 
-  public Object getValue({{entity}} object) {
-    return object.{{reader}}();
-  }
-
    @Override
    public void write(Object bean, Object value) {
-      ({{entity}} bean).{{writer}}(({{type}})value);
+      (({entity}}) bean).{{writer}}(({{type}})value);
    }
 
    @Override
-   public Object getValue(Object bean object) {
-      return ({{entity}} bean).{{reader}}();
+   public Object getValue(Object bean) {
+      return (({{entity}}) bean).{{reader}}();
     }
 
 
