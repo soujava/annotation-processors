@@ -54,7 +54,7 @@ public class FieldModel {
     }
 
     public String getClassName() {
-        return entity + ProcessorUtil.capitalize(name) + "FieldMetaData";
+        return entity + ProcessorUtil.capitalize(fieldName) + "FieldMetaData";
     }
 
     public String getFieldName() {
