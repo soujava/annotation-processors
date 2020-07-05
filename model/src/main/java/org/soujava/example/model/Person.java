@@ -28,6 +28,10 @@ package org.soujava.example.model;
 @Entity
 public class Person {
 
+
+    @Id
+    private Long id;
+
     @Column("native")
     private String username;
 
@@ -56,5 +60,13 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    Long getId() {
+        return id;
+    }
+
+    void setId(Long id) {
+        this.id = id;
     }
 }

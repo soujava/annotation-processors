@@ -39,7 +39,7 @@ public class CompilerTest {
     }
 
     @Test
-    public void shouldCheckColumnCompile() throws IOException {
+    public void shouldCheckColumnCompile() {
 
         final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person3.java");
 
@@ -52,7 +52,20 @@ public class CompilerTest {
     }
 
     @Test
-    public void shouldReturnAccessorIssue() throws IOException {
+    public void shouldUseDefaultMethod() {
+
+        final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person5.java");
+
+        Compilation compilation = javac()
+                .withClasspathFrom(Entity.class.getClassLoader())
+                .withOptions()
+                .withProcessors(new EntityProcessor())
+                .compile(javaFileObject);
+        assertThat(compilation).succeeded();
+    }
+
+    @Test
+    public void shouldReturnAccessorIssue()  {
         final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person4.java");
         Assertions.assertThrows(RuntimeException.class, () ->
                 javac()

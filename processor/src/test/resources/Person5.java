@@ -4,21 +4,19 @@ package org.soujava.example.model;
 import org.soujava.example.model.Entity;
 import org.soujava.example.model.Column;
 
-@Entity
-public class Person2 {
+@Entity("table")
+public class Person5 {
 
     @Column
     private String name;
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
-
-    private Person2() {}
 
     @Override
     public String toString() {
