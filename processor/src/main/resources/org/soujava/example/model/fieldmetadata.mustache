@@ -22,7 +22,7 @@ public final class {{className}} implements FieldMetadata {
 
    @Override
    public void write(Object bean, Object value) {
-      (({entity}}) bean).{{writer}}(({{type}})value);
+       (({{entity}}) bean).{{writer}}(({{type}})value);
    }
 
    @Override
