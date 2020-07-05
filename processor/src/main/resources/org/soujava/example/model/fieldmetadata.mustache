@@ -4,7 +4,6 @@ import org.soujava.example.model.FieldMetadata;
 
 public final class {{className}} implements FieldMetadata {
 
-
   @Override
    public boolean isId() {
     return {{id}};
@@ -30,9 +29,8 @@ public final class {{className}} implements FieldMetadata {
       return (({{entity}}) bean).{{reader}}();
     }
 
-
-  @Override
-  public Class<?> getType()  {
-    return {{type}}.class;
-  }
+   @Override
+   public Class<?> getType()  {
+     return {{type}}.class;
+   }
 }
