@@ -11,7 +11,6 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
@@ -27,6 +26,9 @@ import java.util.stream.Collectors;
 import static javax.lang.model.element.Modifier.DEFAULT;
 import static javax.lang.model.element.Modifier.PROTECTED;
 import static javax.lang.model.element.Modifier.PUBLIC;
+import static org.soujava.example.model.ProcessorUtil.getPackageName;
+import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
+import static org.soujava.example.model.ProcessorUtil.isTypeElement;
 
 @SupportedAnnotationTypes("org.soujava.example.model.Entity")
 public class EntityProcessor extends AbstractProcessor {
@@ -104,17 +106,6 @@ public class EntityProcessor extends AbstractProcessor {
         return new EntityModel(packageName, sourceClassName, entityName);
     }
 
-    private String getPackageName(TypeElement classElement) {
-        return ((PackageElement) classElement.getEnclosingElement()).getQualifiedName().toString();
-    }
-
-    private String getSimpleNameAsString(Element element) {
-        return element.getSimpleName().toString();
-    }
-
-    private boolean isTypeElement(Element element) {
-        return element instanceof TypeElement;
-    }
 
     private void error(IOException e) {
         processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "failed to write extension file: " + e.getMessage());

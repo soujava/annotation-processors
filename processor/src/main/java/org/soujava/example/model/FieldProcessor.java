@@ -20,6 +20,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static java.util.Locale.ENGLISH;
+import static org.soujava.example.model.ProcessorUtil.capitalize;
+import static org.soujava.example.model.ProcessorUtil.getPackageName;
+import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
 
 public class FieldProcessor {
 
@@ -102,12 +105,7 @@ public class FieldProcessor {
     }
 
     private Supplier<ValidationException> generateGetterError(String fieldName, String packageName, String entity, String s) {
-        return () -> new ValidationException(s
-                + fieldName + " in the class: " + packageName + "." + entity);
-    }
-
-    private String capitalize(String name) {
-        return name.substring(0, 1).toUpperCase(ENGLISH) + name.substring(1);
+        return () -> new ValidationException(s + fieldName + " in the class: " + packageName + "." + entity);
     }
 
     private Mustache createTemplate() {
@@ -115,12 +113,6 @@ public class FieldProcessor {
         return factory.compile(TEMPLATE);
     }
 
-    private String getPackageName(TypeElement classElement) {
-        return ((PackageElement) classElement.getEnclosingElement()).getQualifiedName().toString();
-    }
 
-    private String getSimpleNameAsString(Element element) {
-        return element.getSimpleName().toString();
-    }
 
 }
