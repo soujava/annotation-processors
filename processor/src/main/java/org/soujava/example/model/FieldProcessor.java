@@ -57,7 +57,7 @@ public class FieldProcessor {
     private JavaFileObject getFileObject(FieldModel metadata, Filer filer) {
         try {
             return filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
-        }catch (IOException exception) {
+        } catch (IOException exception) {
             throw new ValidationException("An error to create the class: " +
                     metadata.getTargetClassNameWithPackage(), exception);
         }
@@ -79,10 +79,11 @@ public class FieldProcessor {
 
         Column column = field.getAnnotation(Column.class);
         Id id = field.getAnnotation(Id.class);
+        final boolean isId = id != null;
         final String packageName = getPackageName(entity);
-        final String entityName = getSimpleNameAsString(this.entity);//
+        final String entityName = getSimpleNameAsString(this.entity);
         final String name = column.value().isBlank() ? getSimpleNameAsString(field) : fieldName;
-        final String className = field.asType().toString();//column type
+        final String className = field.asType().toString();
         final String getMethod = accessors.stream()
                 .map(ELEMENT_TO_STRING)
                 .filter(hasGetterName)
@@ -102,6 +103,7 @@ public class FieldProcessor {
                 .withReader(getMethod)
                 .withWriter(setMethod)
                 .withFieldName(fieldName)
+                .withId(isId)
                 .build();
     }
 
@@ -113,7 +115,5 @@ public class FieldProcessor {
         MustacheFactory factory = new DefaultMustacheFactory();
         return factory.compile(TEMPLATE);
     }
-
-
 
 }
