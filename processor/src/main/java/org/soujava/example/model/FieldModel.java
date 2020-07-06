@@ -1,5 +1,7 @@
 package org.soujava.example.model;
 
+import java.util.List;
+
 public class FieldModel {
 
     private final String packageName;
@@ -10,11 +12,13 @@ public class FieldModel {
     private final String writer;
     private final String fieldName;
     private final boolean id;
+    private final List<String> arguments;
 
     FieldModel(String packageName, String name,
                String type, String entity,
                String reader, String writer, String fieldName,
-               boolean id) {
+               boolean id,
+               List<String> arguments) {
         this.packageName = packageName;
         this.name = name;
         this.type = type;
@@ -23,6 +27,7 @@ public class FieldModel {
         this.writer = writer;
         this.fieldName = fieldName;
         this.id = id;
+        this.arguments = arguments;
     }
 
     public String getPackageName() {
@@ -93,6 +98,7 @@ public class FieldModel {
         private String writer;
         private String fieldName;
         private boolean id;
+        List<String> arguments;
 
         private FieldMetaDataBuilder() {
         }
@@ -137,8 +143,13 @@ public class FieldModel {
             return this;
         }
 
+        public FieldMetaDataBuilder withArguments(List<String> arguments) {
+            this.arguments = arguments;
+            return this;
+        }
+
         public FieldModel build() {
-            return new FieldModel(packageName, name, type, entity, reader, writer, fieldName, id);
+            return new FieldModel(packageName, name, type, entity, reader, writer, fieldName, id, arguments);
         }
     }
 }

@@ -83,17 +83,17 @@ public class FieldProcessor {
 
         final TypeMirror typeMirror = field.asType();
         String className = null;
-        final List<String> typeArguments;
+        final List<String> arguments;
         if (typeMirror instanceof DeclaredType) {
             DeclaredType declaredType = (DeclaredType) typeMirror;
-            typeArguments = declaredType.getTypeArguments().stream()
+            arguments = declaredType.getTypeArguments().stream()
                     .map(TypeMirror::toString)
                     .collect(Collectors.toList());
             className = declaredType.asElement().toString();
 
         } else {
             className = typeMirror.toString();
-            typeArguments = Collections.emptyList();
+            arguments = Collections.emptyList();
         }
 
         Column column = field.getAnnotation(Column.class);
@@ -123,6 +123,7 @@ public class FieldProcessor {
                 .withWriter(setMethod)
                 .withFieldName(fieldName)
                 .withId(isId)
+                .withArguments(arguments)
                 .build();
     }
 
