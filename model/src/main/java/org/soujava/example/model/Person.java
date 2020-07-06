@@ -24,6 +24,8 @@
 
 package org.soujava.example.model;
 
+import java.util.List;
+
 @JsonObject
 @Entity
 public class Person {
@@ -37,6 +39,9 @@ public class Person {
 
     @Column
     private String email;
+
+    @Column
+    private List<String> contacts;
 
     public Person() {
     }
@@ -68,5 +73,13 @@ public class Person {
 
     void setId(Long id) {
         this.id = id;
+    }
+
+    List<String> getContacts() {
+        return contacts;
+    }
+
+    void setContacts(List<String> contacts) {
+        this.contacts = contacts;
     }
 }
