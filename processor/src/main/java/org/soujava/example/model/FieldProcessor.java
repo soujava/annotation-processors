@@ -89,6 +89,7 @@ public class FieldProcessor {
             typeArguments = declaredType.getTypeArguments().stream()
                     .map(TypeMirror::toString)
                     .collect(Collectors.toList());
+            className = declaredType.asElement().toString();
 
         } else {
             className = typeMirror.toString();
