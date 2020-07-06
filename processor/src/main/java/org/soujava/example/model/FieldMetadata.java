@@ -1,5 +1,7 @@
 package org.soujava.example.model;
 
+import java.util.Set;
+
 public interface FieldMetadata {
 
     boolean isId();
@@ -14,4 +16,5 @@ public interface FieldMetadata {
 
     Class<?> getType();
 
+    Set<Class<?>> getArguments();
 }
