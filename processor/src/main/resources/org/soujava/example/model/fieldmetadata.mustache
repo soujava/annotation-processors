@@ -1,8 +1,18 @@
 package {{packageName}};
 
 import org.soujava.example.model.FieldMetadata;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Collections;
 
 public final class {{className}} implements FieldMetadata {
+
+  private Set<Class<?>> generics;
+
+  public {{className}}() {
+    this.generics = new HashSet<>();
+    generics.add(String.class);
+  }
 
   @Override
    public boolean isId() {
@@ -32,5 +42,9 @@ public final class {{className}} implements FieldMetadata {
    @Override
    public Class<?> getType()  {
      return {{type}}.class;
+   }
+
+   public Set<Class<?>> getGenerics() {
+     return Collections.unmodifiableSet(generics);
    }
 }
