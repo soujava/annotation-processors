@@ -7,11 +7,13 @@ import java.util.Collections;
 
 public final class {{className}} implements FieldMetadata {
 
-  private Set<Class<?>> generics;
+  private Set<Class<?>> arguments;
 
   public {{className}}() {
-    this.generics = new HashSet<>();
-    generics.add(String.class);
+    this.arguments = new HashSet<>();
+    {{#arguments}}
+      generics.add({{value}}.class);
+    {{/arguments}}
   }
 
   @Override
@@ -44,7 +46,7 @@ public final class {{className}} implements FieldMetadata {
      return {{type}}.class;
    }
 
-   public Set<Class<?>> getGenerics() {
-     return Collections.unmodifiableSet(generics);
+   public Set<Class<?>> getArguments() {
+     return Collections.unmodifiableSet(arguments);
    }
 }
