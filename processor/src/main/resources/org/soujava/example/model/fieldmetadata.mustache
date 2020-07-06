@@ -12,7 +12,7 @@ public final class {{className}} implements FieldMetadata {
   public {{className}}() {
     this.arguments = new HashSet<>();
     {{#arguments}}
-      generics.add({{value}}.class);
+    this.arguments.add({{.}}.class);
     {{/arguments}}
   }
 
