@@ -23,7 +23,6 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static javax.lang.model.element.Modifier.DEFAULT;
 import static javax.lang.model.element.Modifier.PROTECTED;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.soujava.example.model.ProcessorUtil.getPackageName;
