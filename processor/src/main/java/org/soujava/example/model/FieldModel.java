@@ -70,6 +70,10 @@ public class FieldModel {
         return id;
     }
 
+    public List<String> getArguments() {
+        return arguments;
+    }
+
     @Override
     public String toString() {
         return "FieldModel{" +
