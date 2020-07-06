@@ -26,27 +26,28 @@ public final class {{className}} implements FieldMetadata {
     return "{{name}}";
   }
 
-   @Override
+  @Override
   public String getFieldName() {
     return "{{fieldName}}";
   }
 
    @Override
    public void write(Object bean, Object value) {
-       (({{entity}}) bean).{{writer}}(({{type}})value);
+    (({{entity}}) bean).{{writer}}(({{type}})value);
    }
 
    @Override
    public Object read(Object bean) {
-      return (({{entity}}) bean).{{reader}}();
+    return (({{entity}}) bean).{{reader}}();
     }
 
    @Override
    public Class<?> getType()  {
-     return {{type}}.class;
+    return {{type}}.class;
    }
 
+   @Override
    public Set<Class<?>> getArguments() {
-     return Collections.unmodifiableSet(arguments);
+    return Collections.unmodifiableSet(arguments);
    }
 }
