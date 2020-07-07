@@ -1,11 +1,14 @@
 package org.soujava.example.model;
 
+import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.Writer;
@@ -34,10 +37,11 @@ public class ClassAnalyzer implements Supplier<String> {
 
     private final Mustache template;
 
-    ClassAnalyzer(Element entity, ProcessingEnvironment processingEnv, Mustache template) {
+    ClassAnalyzer(Element entity, ProcessingEnvironment processingEnv) {
         this.entity = entity;
         this.processingEnv = processingEnv;
-        this.template = template;
+        MustacheFactory factory = new DefaultMustacheFactory();
+        this.template = factory.compile(NEW_INSTANCE);
     }
 
     @Override
@@ -45,26 +49,34 @@ public class ClassAnalyzer implements Supplier<String> {
         if (isTypeElement(entity)) {
             TypeElement typeElement = (TypeElement) entity;
             LOGGER.info("Processing the class: " + typeElement);
-
-
             boolean hasValidConstructor = processingEnv.getElementUtils().getAllMembers(typeElement)
                     .stream()
                     .filter(IS_CONSTRUCTOR.and(HAS_ACCESS))
                     .anyMatch(IS_CONSTRUCTOR.and(HAS_ACCESS));
             if (hasValidConstructor) {
-                EntityModel metadata = getMetadata(typeElement);
-                final List<String> names = processingEnv.getElementUtils()
-                        .getAllMembers(typeElement).stream()
-                        .filter(IS_FIELD.and(HAS_ANNOTATION))
-                        .map(f -> new FieldAnalyzer(f, processingEnv, typeElement))
-                        .map(FieldAnalyzer::get)
-                        .collect(Collectors.toList());
-                createClass(entity, metadata);
+                try {
+                    return analyze(typeElement);
+                } catch (IOException exception) {
+                    error(exception);
+                }
             } else {
                 throw new ValidationException("The class " + getSimpleNameAsString(entity) + " must have at least an either public or default constructor");
             }
-
         }
+
+        return "";
+    }
+
+    private String analyze(TypeElement typeElement) throws IOException {
+        EntityModel metadata = getMetadata(typeElement);
+        final List<String> names = processingEnv.getElementUtils()
+                .getAllMembers(typeElement).stream()
+                .filter(IS_FIELD.and(HAS_ANNOTATION))
+                .map(f -> new FieldAnalyzer(f, processingEnv, typeElement))
+                .map(FieldAnalyzer::get)
+                .collect(Collectors.toList());
+        createClass(entity, metadata);
+
         return "";
     }
 
@@ -83,5 +95,10 @@ public class ClassAnalyzer implements Supplier<String> {
         String sourceClassName = getSimpleNameAsString(element);
         String entityName = annotation.value().isBlank() ? sourceClassName : annotation.value();
         return new EntityModel(packageName, sourceClassName, entityName);
+    }
+
+    private void error(IOException exception) {
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "failed to write extension file: "
+                + exception.getMessage());
     }
 }

@@ -35,7 +35,7 @@ public class EntityProcessor extends AbstractProcessor {
     private static Logger LOGGER = Logger.getLogger(EntityProcessor.class.getName());
 
     private static final EnumSet<Modifier> MODIFIERS = EnumSet.of(PUBLIC, PROTECTED);
-    private static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
+    static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
     static final Predicate<Element> PUBLIC_PRIVATE = el -> el.getModifiers().stream().anyMatch(m -> MODIFIERS.contains(m));
     static final Predicate<Element> DEFAULT_MODIFIER = el -> el.getModifiers().isEmpty();
     static final Predicate<Element> HAS_ACCESS = PUBLIC_PRIVATE.or(DEFAULT_MODIFIER);
@@ -91,7 +91,7 @@ public class EntityProcessor extends AbstractProcessor {
                         .getAllMembers(typeElement).stream()
                         .filter(IS_FIELD.and(HAS_ANNOTATION))
                         .map(f -> new FieldAnalyzer(f, processingEnv, typeElement))
-                        .map(FieldAnalyzer::name)
+                        .map(FieldAnalyzer::get)
                         .collect(Collectors.toList());
                 createClass(entity, metadata);
             } else {
