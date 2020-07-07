@@ -36,7 +36,7 @@ public class FieldAnalyzer implements Supplier<String> {
     private final TypeElement entity;
 
     FieldAnalyzer(Element field, ProcessingEnvironment processingEnv,
-                         TypeElement entity) {
+                  TypeElement entity) {
         this.field = field;
         this.processingEnv = processingEnv;
         this.entity = entity;
@@ -54,8 +54,7 @@ public class FieldAnalyzer implements Supplier<String> {
             throw new ValidationException("An error to compile the class: " +
                     metadata.getTargetClassNameWithPackage(), exception);
         }
-
-        return "";
+        return metadata.getTargetClassNameWithPackage();
     }
 
     private JavaFileObject getFileObject(FieldModel metadata, Filer filer) {
