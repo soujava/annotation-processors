@@ -25,7 +25,7 @@ import static org.soujava.example.model.ProcessorUtil.capitalize;
 import static org.soujava.example.model.ProcessorUtil.getPackageName;
 import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
 
-public class FieldAnalyzer {
+public class FieldAnalyzer implements Supplier<String> {
 
     private static final String TEMPLATE = "org/soujava/example/model/fieldmetadata.mustache";
     private static final Predicate<Element> IS_METHOD = el -> el.getKind() == ElementKind.METHOD;
@@ -35,7 +35,7 @@ public class FieldAnalyzer {
     private final ProcessingEnvironment processingEnv;
     private final TypeElement entity;
 
-    public FieldAnalyzer(Element field, ProcessingEnvironment processingEnv,
+    FieldAnalyzer(Element field, ProcessingEnvironment processingEnv,
                          TypeElement entity) {
         this.field = field;
         this.processingEnv = processingEnv;
@@ -43,7 +43,8 @@ public class FieldAnalyzer {
         this.template = createTemplate();
     }
 
-    public String name() {
+    @Override
+    public String get() {
         FieldModel metadata = getMetaData();
         Filer filer = processingEnv.getFiler();
         JavaFileObject fileObject = getFileObject(metadata, filer);
