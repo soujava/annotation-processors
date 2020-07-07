@@ -22,7 +22,7 @@ public class CompilerTest {
         Compilation compilation = javac()
                 .withClasspathFrom(Entity.class.getClassLoader())
                 .withOptions()
-                .withProcessors(new EntityProcessor())
+                .withProcessors(new MetadataProcessor())
                 .compile(javaFileObject);
         assertThat(compilation).succeeded();
     }
@@ -34,7 +34,7 @@ public class CompilerTest {
                 javac()
                         .withClasspathFrom(Entity.class.getClassLoader())
                         .withOptions()
-                        .withProcessors(new EntityProcessor())
+                        .withProcessors(new MetadataProcessor())
                         .compile(javaFileObject));
     }
 
@@ -46,7 +46,7 @@ public class CompilerTest {
         Compilation compilation = javac()
                 .withClasspathFrom(Entity.class.getClassLoader())
                 .withOptions()
-                .withProcessors(new EntityProcessor())
+                .withProcessors(new MetadataProcessor())
                 .compile(javaFileObject);
         assertThat(compilation).succeeded();
     }
@@ -59,7 +59,7 @@ public class CompilerTest {
         Compilation compilation = javac()
                 .withClasspathFrom(Entity.class.getClassLoader())
                 .withOptions()
-                .withProcessors(new EntityProcessor())
+                .withProcessors(new MetadataProcessor())
                 .compile(javaFileObject);
         assertThat(compilation).succeeded();
     }
@@ -72,7 +72,7 @@ public class CompilerTest {
         Compilation compilation = javac()
                 .withClasspathFrom(Entity.class.getClassLoader())
                 .withOptions()
-                .withProcessors(new EntityProcessor())
+                .withProcessors(new MetadataProcessor())
                 .compile(javaFileObject);
         assertThat(compilation).succeeded();
     }
@@ -85,7 +85,7 @@ public class CompilerTest {
                 javac()
                         .withClasspathFrom(Entity.class.getClassLoader())
                         .withOptions()
-                        .withProcessors(new EntityProcessor())
+                        .withProcessors(new MetadataProcessor())
                         .compile(javaFileObject));
     }
 }

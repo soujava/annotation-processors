@@ -10,7 +10,6 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
@@ -78,7 +77,7 @@ public class FieldAnalyzer {
 
         final List<Element> accessors = processingEnv.getElementUtils()
                 .getAllMembers(entity).stream()
-                .filter(validName.and(IS_METHOD).and(EntityProcessor.HAS_ACCESS))
+                .filter(validName.and(IS_METHOD).and(MetadataProcessor.HAS_ACCESS))
                 .collect(Collectors.toList());
 
         final TypeMirror typeMirror = field.asType();

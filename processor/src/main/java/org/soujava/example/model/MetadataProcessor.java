@@ -30,9 +30,9 @@ import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
 import static org.soujava.example.model.ProcessorUtil.isTypeElement;
 
 @SupportedAnnotationTypes("org.soujava.example.model.Entity")
-public class EntityProcessor extends AbstractProcessor {
+public class MetadataProcessor extends AbstractProcessor {
 
-    private static Logger LOGGER = Logger.getLogger(EntityProcessor.class.getName());
+    private static Logger LOGGER = Logger.getLogger(MetadataProcessor.class.getName());
 
     private static final EnumSet<Modifier> MODIFIERS = EnumSet.of(PUBLIC, PROTECTED);
     private static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
@@ -48,7 +48,7 @@ public class EntityProcessor extends AbstractProcessor {
 
     private final Mustache template;
 
-    public EntityProcessor() {
+    public MetadataProcessor() {
         this.template = createTemplate();
     }
 
