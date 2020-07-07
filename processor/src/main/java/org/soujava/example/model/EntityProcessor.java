@@ -39,10 +39,10 @@ public class EntityProcessor extends AbstractProcessor {
     static final Predicate<Element> PUBLIC_PRIVATE = el -> el.getModifiers().stream().anyMatch(m -> MODIFIERS.contains(m));
     static final Predicate<Element> DEFAULT_MODIFIER = el -> el.getModifiers().isEmpty();
     static final Predicate<Element> HAS_ACCESS = PUBLIC_PRIVATE.or(DEFAULT_MODIFIER);
-    public static final Predicate<Element> HAS_COLUMN_ANNOTATION = el -> el.getAnnotation(Column.class) != null;
-    public static final Predicate<Element> HAS_ID_ANNOTATION = el -> el.getAnnotation(Id.class) != null;
-    public static final Predicate<Element> HAS_ANNOTATION = HAS_COLUMN_ANNOTATION.or(HAS_ID_ANNOTATION);
-    public static final Predicate<Element> IS_FIELD = el -> el.getKind() == ElementKind.FIELD;
+    static final Predicate<Element> HAS_COLUMN_ANNOTATION = el -> el.getAnnotation(Column.class) != null;
+    static final Predicate<Element> HAS_ID_ANNOTATION = el -> el.getAnnotation(Id.class) != null;
+    static final Predicate<Element> HAS_ANNOTATION = HAS_COLUMN_ANNOTATION.or(HAS_ID_ANNOTATION);
+    static final Predicate<Element> IS_FIELD = el -> el.getKind() == ElementKind.FIELD;
 
     private static final String NEW_INSTANCE = "org/soujava/example/model/newInstance.mustache";
 
