@@ -20,8 +20,6 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 @SupportedAnnotationTypes("org.soujava.example.model.Entity")
 public class EntityProcessor extends AbstractProcessor {
 
-    private static Logger LOGGER = Logger.getLogger(EntityProcessor.class.getName());
-
     private static final EnumSet<Modifier> MODIFIERS = EnumSet.of(PUBLIC, PROTECTED);
 
     static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
@@ -39,8 +37,6 @@ public class EntityProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
 
-        LOGGER.info("Starting processing Entity annotations: " + annotations);
-
         final List<String> classes = new ArrayList<>();
         for (TypeElement annotation : annotations) {
             roundEnv.getElementsAnnotatedWith(annotation)
@@ -48,7 +44,6 @@ public class EntityProcessor extends AbstractProcessor {
                     .map(ClassAnalyzer::get)
                     .filter(IS_NOT_BLANK).forEach(classes::add);
         }
-        LOGGER.info("Finished the Entity annotations: " + classes);
         return false;
     }
 
