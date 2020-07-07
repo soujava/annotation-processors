@@ -90,8 +90,8 @@ public class EntityProcessor extends AbstractProcessor {
                 final List<String> names = processingEnv.getElementUtils()
                         .getAllMembers(typeElement).stream()
                         .filter(IS_FIELD.and(HAS_ANNOTATION))
-                        .map(f -> new FieldProcessor(f, processingEnv, typeElement))
-                        .map(FieldProcessor::name)
+                        .map(f -> new FieldAnalyzer(f, processingEnv, typeElement))
+                        .map(FieldAnalyzer::name)
                         .collect(Collectors.toList());
                 createClass(entity, metadata);
             } else {

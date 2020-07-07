@@ -26,7 +26,7 @@ import static org.soujava.example.model.ProcessorUtil.capitalize;
 import static org.soujava.example.model.ProcessorUtil.getPackageName;
 import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
 
-public class FieldProcessor {
+public class FieldAnalyzer {
 
     private static final String TEMPLATE = "org/soujava/example/model/fieldmetadata.mustache";
     private static final Predicate<Element> IS_METHOD = el -> el.getKind() == ElementKind.METHOD;
@@ -36,8 +36,8 @@ public class FieldProcessor {
     private final ProcessingEnvironment processingEnv;
     private final TypeElement entity;
 
-    public FieldProcessor(Element field, ProcessingEnvironment processingEnv,
-                          TypeElement entity) {
+    public FieldAnalyzer(Element field, ProcessingEnvironment processingEnv,
+                         TypeElement entity) {
         this.field = field;
         this.processingEnv = processingEnv;
         this.entity = entity;
