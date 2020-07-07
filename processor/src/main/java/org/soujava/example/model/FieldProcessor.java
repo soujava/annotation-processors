@@ -82,7 +82,7 @@ public class FieldProcessor {
                 .collect(Collectors.toList());
 
         final TypeMirror typeMirror = field.asType();
-        String className = null;
+        String className;
         final List<String> arguments;
         if (typeMirror instanceof DeclaredType) {
             DeclaredType declaredType = (DeclaredType) typeMirror;
@@ -129,9 +129,9 @@ public class FieldProcessor {
 
     private String getName(String fieldName, Column column, Id id) {
         if (id == null) {
-            return column.value().isBlank() ? getSimpleNameAsString(field) : column.value();
+            return column.value().isBlank() ? fieldName : column.value();
         } else {
-            return id.value().isBlank() ? getSimpleNameAsString(field) : id.value();
+            return id.value().isBlank() ? fieldName : id.value();
         }
     }
 
