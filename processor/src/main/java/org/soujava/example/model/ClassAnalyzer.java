@@ -30,7 +30,6 @@ public class ClassAnalyzer implements Supplier<String> {
     private static Logger LOGGER = Logger.getLogger(ClassAnalyzer.class.getName());
     private static final String NEW_INSTANCE = "org/soujava/example/model/newInstance.mustache";
 
-
     private final Element entity;
 
     private final ProcessingEnvironment processingEnv;
@@ -76,10 +75,9 @@ public class ClassAnalyzer implements Supplier<String> {
                 .map(FieldAnalyzer::get)
                 .collect(Collectors.toList());
         createClass(entity, metadata);
-
-        return "";
+        LOGGER.info("Found the fields: " + names);
+        return metadata.getTargetClassNameWithPackage();
     }
-
 
     private void createClass(Element entity, EntityModel metadata) throws IOException {
         Filer filer = processingEnv.getFiler();
