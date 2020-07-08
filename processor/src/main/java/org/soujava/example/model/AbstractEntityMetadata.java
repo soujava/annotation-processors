@@ -12,33 +12,8 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
-public class AbstractEntityMetadata implements EntityMetadata {
+abstract class AbstractEntityMetadata implements EntityMetadata {
 
-    private final List<FieldMetadata> fields;
-
-    public AbstractEntityMetadata() {
-        this.fields = new ArrayList<>();
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public Class<?> getClassInstance() {
-        return null;
-    }
-
-    @Override
-    public List<FieldMetadata> getFields() {
-        return Collections.unmodifiableList(fields);
-    }
-
-    @Override
-    public <T> T newInstance() {
-        return null;
-    }
 
     @Override
     public List<String> getFieldsName() {
