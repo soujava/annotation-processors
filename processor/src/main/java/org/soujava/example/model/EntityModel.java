@@ -27,7 +27,7 @@ public class EntityModel {
     }
 
     public String getTargetClassName() {
-        return sourceClassName + "NewInstance";
+        return sourceClassName + "EntityMetaData";
     }
 
     public String getTargetClassNameWithPackage() {
