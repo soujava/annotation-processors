@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import org.soujava.example.model.EntityMetadata;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.collectingAndThen;
@@ -26,11 +27,6 @@ public class AbstractEntityMetadata implements EntityMetadata {
     }
 
     @Override
-    public List<FieldMetadata> getFields() {
-        return Collections.unmodifiableList(fields);
-    }
-
-    @Override
     public <T> T newInstance() {
         return null;
     }
@@ -38,6 +34,11 @@ public class AbstractEntityMetadata implements EntityMetadata {
     @Override
     public String getName() {
         return null;
+    }
+
+    @Override
+    public List<FieldMetadata> getFields() {
+        return Collections.unmodifiableList(fields);
     }
 
     @Override
