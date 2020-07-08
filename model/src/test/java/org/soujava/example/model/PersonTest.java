@@ -8,21 +8,21 @@ public class PersonTest {
 
     @Test
     public void shouldCreate() {
-        Person person = PersonNewInstance.newInstance();
+        Person person = new PersonEntityMetaData().newInstance();
         Assert.assertNotNull(person);
     }
 
 
     @Test
     public void shouldGetter() {
-        Person person = PersonNewInstance.newInstance();
+        Person person = new PersonEntityMetaData().newInstance();
         person.setEmail("otavio");
         Assertions.assertEquals("otavio", new PersonEmailFieldMetaData().read(person));
     }
 
     @Test
     public void shouldSetter() {
-        Person person = PersonNewInstance.newInstance();
+        Person person = new PersonEntityMetaData().newInstance();
         new PersonEmailFieldMetaData().write(person, "otavio");
         Assertions.assertEquals("otavio", new PersonEmailFieldMetaData().read(person));
     }
