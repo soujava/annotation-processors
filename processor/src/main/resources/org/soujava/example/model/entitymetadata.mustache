@@ -1,17 +1,80 @@
 package {{packageName}};
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import org.soujava.example.model.EntityMetadata;
 
-public final class {{targetClassName}} {
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
-  private {{targetClassName}}() {
-  }
+public final class {{targetClassName}} implements EntityMetadata {
 
-  public String getEntityName() {
-    return "{{entityName}}";
- }
+private final List<FieldMetadata> fields;
 
-  public static {{sourceClassName}} newInstance() {
-    return new {{sourceClassName}}();
-  }
+    public {{targetClassName}}() {
+        this.fields = new ArrayList<>();
+    }
 
+    @Override
+    public String getName() {
+        return "{{entityName}}";
+    }
+
+    @Override 
+    public <T> T newInstance() {
+        return new {{sourceClassName}}(); 
+    }
+
+    @Override
+    public Class<?> getClassInstance() {
+        return {{sourceClassName}}.class;
+    }
+
+    @Override
+    public List<FieldMetadata> getFields() {
+        return Collections.unmodifiableList(fields);
+    }
+
+    @Override
+    public List<String> getFieldsName() {
+        return getFields().stream()
+        .map(FieldMetadata::getFieldName)
+        .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+}
+
+    @Override
+    public String getColumnField(String javaField) {
+    Objects.requireNonNull(javaField, "javaField is required");
+    return getFields().stream()
+        .filter(f -> javaField.equals(f.getFieldName()))
+        .map(FieldMetadata::getName)
+        .findFirst().orElse(javaField);
+    }
+
+    @Override
+    public Optional<FieldMetadata> getFieldMapping(String javaField) {
+    Objects.requireNonNull(javaField, "javaField is required");
+    return getFields().stream()
+        .filter(f -> javaField.equals(f.getFieldName()))
+        .findFirst();
+    }
+
+    @Override
+    public Map<String, FieldMetadata> getFieldsGroupByName() {
+    return getFields().stream()
+    .collect(toMap(FieldMetadata::getName, identity()));
+    }
+
+    @Override
+    public Optional<FieldMetadata> getId() {
+    return getFields().stream()
+    .filter(FieldMetadata::isId)
+    .findFirst();
+    }
 }
