@@ -30,7 +30,7 @@ public class EntityModel {
         return sourceClassName + "EntityMetaData";
     }
 
-    public String getTargetClassNameWithPackage() {
+    public String getClassName() {
         return packageName + "." + getTargetClassName();
     }
 
