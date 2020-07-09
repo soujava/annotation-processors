@@ -92,7 +92,7 @@ public class ClassAnalyzer implements Supplier<String> {
         String packageName = getPackageName(element);
         String sourceClassName = getSimpleNameAsString(element);
         String entityName = annotation.value().isBlank() ? sourceClassName : annotation.value();
-        return new EntityModel(packageName, sourceClassName, entityName);
+        return new EntityModel(packageName, sourceClassName, entityName, fields);
     }
 
     private void error(IOException exception) {

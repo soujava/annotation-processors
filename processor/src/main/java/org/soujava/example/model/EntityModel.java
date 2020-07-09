@@ -1,17 +1,22 @@
 package org.soujava.example.model;
 
+import java.util.List;
+
 public class EntityModel {
 
-    private String packageName;
+    private final String packageName;
 
-    private String entity;
+    private final String entity;
 
-    private String name;
+    private final String name;
 
-    public EntityModel(String packageName, String entity, String name) {
+    private final List<String> fields;
+
+    public EntityModel(String packageName, String entity, String name, List<String> fields) {
         this.packageName = packageName;
         this.entity = entity;
         this.name = name;
+        this.fields = fields;
     }
 
     public String getPackageName() {
@@ -32,6 +37,10 @@ public class EntityModel {
 
     public String getName() {
         return name;
+    }
+
+    public List<String> getFields() {
+        return fields;
     }
 
     @Override
