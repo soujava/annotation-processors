@@ -4,13 +4,13 @@ public class EntityModel {
 
     private String packageName;
 
-    private String sourceClassName;
+    private String entity;
 
     private String name;
 
-    public EntityModel(String packageName, String sourceClassName, String name) {
+    public EntityModel(String packageName, String entity, String name) {
         this.packageName = packageName;
-        this.sourceClassName = sourceClassName;
+        this.entity = entity;
         this.name = name;
     }
 
@@ -18,16 +18,16 @@ public class EntityModel {
         return packageName;
     }
 
-    public String getSourceClassName() {
-        return sourceClassName;
+    public String getEntity() {
+        return entity;
     }
 
     public String getSourceClassNameWithPackage() {
-        return packageName + "." + sourceClassName;
+        return packageName + "." + entity;
     }
 
     public String getTargetClassName() {
-        return sourceClassName + "EntityMetaData";
+        return entity + "EntityMetaData";
     }
 
     public String getClassName() {
@@ -42,7 +42,7 @@ public class EntityModel {
     public String toString() {
         return "EntityMetadata{" +
                 "packageName='" + packageName + '\'' +
-                ", sourceClassName='" + sourceClassName + '\'' +
+                ", sourceClassName='" + entity + '\'' +
                 ", entityName='" + name + '\'' +
                 '}';
     }
