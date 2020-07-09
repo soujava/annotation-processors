@@ -67,15 +67,17 @@ public class ClassAnalyzer implements Supplier<String> {
     }
 
     private String analyze(TypeElement typeElement) throws IOException {
-        EntityModel metadata = getMetadata(typeElement);
-        final List<String> names = processingEnv.getElementUtils()
+
+        final List<String> fields = processingEnv.getElementUtils()
                 .getAllMembers(typeElement).stream()
                 .filter(IS_FIELD.and(HAS_ANNOTATION))
                 .map(f -> new FieldAnalyzer(f, processingEnv, typeElement))
                 .map(FieldAnalyzer::get)
                 .collect(Collectors.toList());
+
+        EntityModel metadata = getMetadata(typeElement, fields);
         createClass(entity, metadata);
-        LOGGER.info("Found the fields: " + names);
+        LOGGER.info("Found the fields: " + fields);
         return metadata.getQualified();
     }
 
@@ -87,7 +89,7 @@ public class ClassAnalyzer implements Supplier<String> {
         }
     }
 
-    private EntityModel getMetadata(TypeElement element) {
+    private EntityModel getMetadata(TypeElement element, List<String> fields) {
         final Entity annotation = element.getAnnotation(Entity.class);
         String packageName = getPackageName(element);
         String sourceClassName = getSimpleNameAsString(element);
