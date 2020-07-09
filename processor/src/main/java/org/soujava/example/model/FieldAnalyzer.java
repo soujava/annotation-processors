@@ -52,17 +52,17 @@ public class FieldAnalyzer implements Supplier<String> {
             template.execute(writer, metadata);
         } catch (IOException exception) {
             throw new ValidationException("An error to compile the class: " +
-                    metadata.getTargetClassNameWithPackage(), exception);
+                    metadata.getQualified(), exception);
         }
-        return metadata.getTargetClassNameWithPackage();
+        return metadata.getQualified();
     }
 
     private JavaFileObject getFileObject(FieldModel metadata, Filer filer) {
         try {
-            return filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
+            return filer.createSourceFile(metadata.getQualified(), entity);
         } catch (IOException exception) {
             throw new ValidationException("An error to create the class: " +
-                    metadata.getTargetClassNameWithPackage(), exception);
+                    metadata.getQualified(), exception);
         }
 
     }

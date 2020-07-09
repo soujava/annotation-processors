@@ -54,7 +54,7 @@ public class FieldModel {
         return writer;
     }
 
-    public String getTargetClassNameWithPackage() {
+    public String getQualified() {
         return packageName + "." + getClassName();
     }
 
