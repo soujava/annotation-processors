@@ -6,12 +6,12 @@ public class EntityModel {
 
     private String sourceClassName;
 
-    private String entityName;
+    private String name;
 
-    public EntityModel(String packageName, String sourceClassName, String entityName) {
+    public EntityModel(String packageName, String sourceClassName, String name) {
         this.packageName = packageName;
         this.sourceClassName = sourceClassName;
-        this.entityName = entityName;
+        this.name = name;
     }
 
     public String getPackageName() {
@@ -34,8 +34,8 @@ public class EntityModel {
         return packageName + "." + getTargetClassName();
     }
 
-    public String getEntityName() {
-        return entityName;
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class EntityModel {
         return "EntityMetadata{" +
                 "packageName='" + packageName + '\'' +
                 ", sourceClassName='" + sourceClassName + '\'' +
-                ", entityName='" + entityName + '\'' +
+                ", entityName='" + name + '\'' +
                 '}';
     }
 }
