@@ -19,6 +19,9 @@ private final List<FieldMetadata> fields;
 
     public {{className}}() {
         this.fields = new ArrayList<>();
+    {{#fields}}
+        this.fields.add(new {{.}}()));
+    {{/fields}}
     }
 
     @Override
