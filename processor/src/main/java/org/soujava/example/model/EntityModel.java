@@ -22,16 +22,12 @@ public class EntityModel {
         return entity;
     }
 
-    public String getSourceClassNameWithPackage() {
-        return packageName + "." + entity;
-    }
-
-    public String getTargetClassName() {
+    public String getClassName() {
         return entity + "EntityMetaData";
     }
 
-    public String getClassName() {
-        return packageName + "." + getTargetClassName();
+    public String getQualified() {
+        return packageName + "." + getClassName();
     }
 
     public String getName() {
