@@ -76,12 +76,12 @@ public class ClassAnalyzer implements Supplier<String> {
                 .collect(Collectors.toList());
         createClass(entity, metadata);
         LOGGER.info("Found the fields: " + names);
-        return metadata.getTargetClassNameWithPackage();
+        return metadata.getClassName();
     }
 
     private void createClass(Element entity, EntityModel metadata) throws IOException {
         Filer filer = processingEnv.getFiler();
-        JavaFileObject fileObject = filer.createSourceFile(metadata.getTargetClassNameWithPackage(), entity);
+        JavaFileObject fileObject = filer.createSourceFile(metadata.getClassName(), entity);
         try (Writer writer = fileObject.openWriter()) {
             template.execute(writer, metadata);
         }
