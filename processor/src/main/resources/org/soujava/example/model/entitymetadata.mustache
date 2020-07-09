@@ -28,12 +28,12 @@ private final List<FieldMetadata> fields;
 
     @Override 
     public <T> T newInstance() {
-        return (T)new {{sourceClassName}}();
+        return (T)new {{entity}}();
     }
 
     @Override
     public Class<?> getClassInstance() {
-        return {{sourceClassName}}.class;
+        return {{entity}}.class;
     }
 
     @Override
