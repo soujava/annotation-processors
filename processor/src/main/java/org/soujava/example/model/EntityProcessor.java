@@ -61,7 +61,9 @@ public class EntityProcessor extends AbstractProcessor {
         }
 
         try {
-            createClassMapping(entities);
+            if (!entities.isEmpty()) {
+                createClassMapping(entities);
+            }
         } catch (IOException exception) {
             error(exception);
         }
