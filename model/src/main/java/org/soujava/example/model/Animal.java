@@ -1,6 +1,6 @@
 package org.soujava.example.model;
 
-@Entity
+@Entity("kind")
 public class Animal {
 
     @Id
