@@ -37,12 +37,12 @@ public class EntityProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
 
-        final List<String> classes = new ArrayList<>();
+        final List<String> entities = new ArrayList<>();
         for (TypeElement annotation : annotations) {
             roundEnv.getElementsAnnotatedWith(annotation)
                     .stream().map(e -> new ClassAnalyzer(e, processingEnv))
                     .map(ClassAnalyzer::get)
-                    .filter(IS_NOT_BLANK).forEach(classes::add);
+                    .filter(IS_NOT_BLANK).forEach(entities::add);
         }
 
         return false;
