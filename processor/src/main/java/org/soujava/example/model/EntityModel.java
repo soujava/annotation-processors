@@ -27,6 +27,11 @@ public class EntityModel {
         return entity;
     }
 
+    public String getSimpleName() {
+        final int index = entity.lastIndexOf('.');
+        return entity.substring(index);
+    }
+
     public String getClassName() {
         return entity + "EntityMetaData";
     }
