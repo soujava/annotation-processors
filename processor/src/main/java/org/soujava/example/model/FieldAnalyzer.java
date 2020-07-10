@@ -27,7 +27,7 @@ import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
 
 public class FieldAnalyzer implements Supplier<String> {
 
-    private static final String TEMPLATE = "org/soujava/example/model/fieldmetadata.mustache";
+    private static final String TEMPLATE = "fieldmetadata.mustache";
     private static final Predicate<Element> IS_METHOD = el -> el.getKind() == ElementKind.METHOD;
     public static final Function<Element, String> ELEMENT_TO_STRING = el -> el.getSimpleName().toString();
     private final Element field;

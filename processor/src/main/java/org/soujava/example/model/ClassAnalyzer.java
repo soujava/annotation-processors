@@ -28,7 +28,7 @@ import static org.soujava.example.model.ProcessorUtil.isTypeElement;
 public class ClassAnalyzer implements Supplier<String> {
 
     private static Logger LOGGER = Logger.getLogger(ClassAnalyzer.class.getName());
-    private static final String NEW_INSTANCE = "org/soujava/example/model/entitymetadata.mustache";
+    private static final String NEW_INSTANCE = "entitymetadata.mustache";
 
     private final Element entity;
 
