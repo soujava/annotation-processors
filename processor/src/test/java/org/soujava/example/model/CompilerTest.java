@@ -88,4 +88,19 @@ public class CompilerTest {
                         .withProcessors(new EntityProcessor())
                         .compile(javaFileObject));
     }
+
+    @Test
+    public void shouldAddTwoClass()  {
+        final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person.java");
+        final JavaFileObject javaFileObject2 = JavaFileObjects.forResource("Person5.java");
+
+        Compilation compilation = javac()
+                .withClasspathFrom(Entity.class.getClassLoader())
+                .withOptions()
+                .withProcessors(new EntityProcessor())
+                .compile(javaFileObject, javaFileObject2);
+        assertThat(compilation).succeeded();
+    }
+
+
 }
