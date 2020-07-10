@@ -29,6 +29,17 @@ private final List<FieldMetadata> fields;
         return "{{name}}";
     }
 
+    @Override
+    public String getClassName() {
+         return "{{entity}}";
+    }
+
+    @Override
+    public String getSimpleName() {
+        return "{{simpleName}}";
+    }
+
+
     @Override 
     public <T> T newInstance() {
         return (T)new {{entity}}();
