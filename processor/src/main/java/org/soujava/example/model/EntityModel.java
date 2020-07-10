@@ -27,9 +27,8 @@ public class EntityModel {
         return entity;
     }
 
-    public String getSimpleName() {
-        final int index = entity.lastIndexOf('.');
-        return entity.substring(index);
+    public String getEntityQualified() {
+        return packageName + '.' + entity;
     }
 
     public String getClassName() {
