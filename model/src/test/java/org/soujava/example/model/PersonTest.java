@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Assertions;
 
 public class PersonTest {
 
+    private ClassMappings mappings = new DefaultClassMappings();
+
     @Test
     public void shouldCreate() {
-        Person person = new PersonEntityMetaData().newInstance();
+        final EntityMetadata entityMetadata = mappings.get(Person.class);
+        Person person = entityMetadata.newInstance();
         Assert.assertNotNull(person);
     }
 
