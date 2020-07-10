@@ -26,7 +26,6 @@ package org.soujava.example.model;
 
 import java.util.List;
 
-@JsonObject
 @Entity
 public class Person {
 
