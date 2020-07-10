@@ -1,12 +1,21 @@
 package org.soujava.example.model;
 
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Filer;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -21,7 +30,7 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 public class EntityProcessor extends AbstractProcessor {
 
     private static final EnumSet<Modifier> MODIFIERS = EnumSet.of(PUBLIC, PROTECTED);
-
+    private static final String TEMPLATE = "classmappings.mustache";
     static final Predicate<Element> IS_CONSTRUCTOR = el -> el.getKind() == ElementKind.CONSTRUCTOR;
     static final Predicate<String> IS_BLANK = String::isBlank;
     static final Predicate<String> IS_NOT_BLANK = IS_BLANK.negate();
@@ -32,6 +41,12 @@ public class EntityProcessor extends AbstractProcessor {
     static final Predicate<Element> HAS_ID_ANNOTATION = el -> el.getAnnotation(Id.class) != null;
     static final Predicate<Element> HAS_ANNOTATION = HAS_COLUMN_ANNOTATION.or(HAS_ID_ANNOTATION);
     static final Predicate<Element> IS_FIELD = el -> el.getKind() == ElementKind.FIELD;
+
+    private final Mustache template;
+
+    public EntityProcessor() {
+        this.template = createTemplate();
+    }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
@@ -45,7 +60,30 @@ public class EntityProcessor extends AbstractProcessor {
                     .filter(IS_NOT_BLANK).forEach(entities::add);
         }
 
+        try {
+            createClassMapping(entities);
+        } catch (IOException exception) {
+            error(exception);
+        }
         return false;
     }
 
+    private void createClassMapping(List<String> entities) throws IOException {
+        ClassMappingsModel metadata = new ClassMappingsModel(entities);
+        Filer filer = processingEnv.getFiler();
+        JavaFileObject fileObject = filer.createSourceFile(metadata.getQualified());
+        try (Writer writer = fileObject.openWriter()) {
+            template.execute(writer, metadata);
+        }
+    }
+
+    private Mustache createTemplate() {
+        MustacheFactory factory = new DefaultMustacheFactory();
+        return factory.compile(TEMPLATE);
+    }
+
+    private void error(IOException exception) {
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "failed to write extension file: "
+                + exception.getMessage());
+    }
 }
