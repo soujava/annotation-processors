@@ -8,6 +8,8 @@ public interface EntityMetadata {
 
     String getName();
 
+    String getSimpleName();
+
     List<String> getFieldsName();
 
     Class<?> getClassInstance();
