@@ -44,6 +44,7 @@ public class EntityProcessor extends AbstractProcessor {
                     .map(ClassAnalyzer::get)
                     .filter(IS_NOT_BLANK).forEach(classes::add);
         }
+
         return false;
     }
 
