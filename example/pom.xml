@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-         <groupId>org.soujava.metadata</groupId>
-         <artifactId>parent</artifactId>
-         <version>1.0.0</version>
+        <groupId>org.soujava.metadata</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <artifactId>model</artifactId>
+    <artifactId>example</artifactId>
 
     <dependencies>
         <dependency>
