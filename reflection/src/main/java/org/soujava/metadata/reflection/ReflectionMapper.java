@@ -1,4 +1,4 @@
-package org.soujava;
+package org.soujava.metadata.reflection;
 
-public class ReflectionMapper {
+public class ReflectionMapper implements  {
 }
