@@ -26,11 +26,10 @@ public class ReflectionMapper implements Mapper {
             for (Field field : type.getDeclaredFields()) {
                 write(map, instance, field);
             }
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            return instance;
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
+            throw new RuntimeException("An error to field the entity process", exception);
         }
-
-        return null;
     }
 
 
@@ -49,7 +48,7 @@ public class ReflectionMapper implements Mapper {
             try {
                 write(entity, map, field);
             } catch (IllegalAccessException exception) {
-                throw new RuntimeException("An error to field the map", exception);
+                throw new RuntimeException("An error to field the map process", exception);
             }
         }
 
