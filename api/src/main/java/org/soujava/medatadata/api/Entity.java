@@ -1,4 +1,4 @@
-package org.soujava.example.model;
+package org.soujava.medatadata.api;
 
 
 import java.lang.annotation.Documented;
@@ -6,7 +6,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 @Documented
-@Target(ElementType.FIELD)
-public @interface Column {
+@Target(ElementType.TYPE)
+public @interface Entity {
     String value() default "";
 }

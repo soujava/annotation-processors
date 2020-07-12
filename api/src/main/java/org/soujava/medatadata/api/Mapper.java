@@ -1,4 +1,4 @@
-package org.soujava.example.model;
+package org.soujava.medatadata.api;
 
 import java.util.Map;
 

@@ -1,8 +1,8 @@
 package org.soujava.example.model;
 
 
-import org.soujava.example.model.Entity;
-import org.soujava.example.model.Column;
+import org.soujava.medatadata.api.Entity;
+import org.soujava.medatadata.api.Column;
 
 @Entity
 public class Person2 {
