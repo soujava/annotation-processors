@@ -11,8 +11,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>api</module>
         <module>processor</module>
-        <module>model</module>
+        <module>reflection</module>
+        <module>compile</module>
+        <module>example</module>
     </modules>
     <properties>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
