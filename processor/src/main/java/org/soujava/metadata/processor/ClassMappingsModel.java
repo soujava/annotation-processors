@@ -15,6 +15,6 @@ public class ClassMappingsModel {
     }
 
     public String getQualified() {
-        return "org.soujava.example.model.DefaultClassMappings";
+        return "org.soujava.metadata.processor.DefaultClassMappings";
     }
 }
