@@ -5,9 +5,6 @@ import org.soujava.metadata.processor.ProcessorMap;
 
 public class ReflectionMapTest extends AbstractMapperTest {
 
-    private Mapper mapper;
-
-
     @Override
     protected Mapper getMapper() {
         return new ProcessorMap();
