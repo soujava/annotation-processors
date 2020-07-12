@@ -3,12 +3,15 @@ package org.soujava.metadata.processor;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.soujava.metadata.example.Person;
+import org.soujava.metadata.example.PersonEmailFieldMetaData;
+import org.soujava.metadata.example.PersonEntityMetaData;
 
 import java.util.Map;
 
 public class PersonTest {
 
-    private ClassMappings mappings = new DefaultClassMappings();
+    private ClassMappings mappings = new org.soujava.metadata.processor.DefaultClassMappings();
 
     @Test
     public void shouldCreate() {
