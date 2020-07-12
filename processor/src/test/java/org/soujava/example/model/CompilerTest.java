@@ -4,6 +4,7 @@ import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.soujava.medatadata.api.Entity;
 
 import javax.tools.JavaFileObject;
 import java.io.IOException;
