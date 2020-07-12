@@ -29,6 +29,7 @@ public class ProcessorMapTest {
 
         final Map<String, Object> map = mapper.toMap(person);
         Assertions.assertEquals(10L, map.get("id"));
+        Assertions.assertEquals("Person", map.get("entity"));
         Assertions.assertEquals("otaviojava", map.get("native"));
         Assertions.assertEquals("otaviojava@java.net", map.get("email"));
         Assertions.assertEquals(person.getContacts(), map.get("contacts"));
