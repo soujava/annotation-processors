@@ -1,4 +1,4 @@
-package org.soujava.example.model;
+package org.soujava.metadata.processor;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -23,9 +23,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.soujava.example.model.ProcessorUtil.capitalize;
-import static org.soujava.example.model.ProcessorUtil.getPackageName;
-import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
+import static org.soujava.metadata.processor.ProcessorUtil.capitalize;
+import static org.soujava.metadata.processor.ProcessorUtil.getPackageName;
+import static org.soujava.metadata.processor.ProcessorUtil.getSimpleNameAsString;
 
 public class FieldAnalyzer implements Supplier<String> {
 

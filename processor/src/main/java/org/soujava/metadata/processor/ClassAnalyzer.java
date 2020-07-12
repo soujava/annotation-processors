@@ -1,4 +1,4 @@
-package org.soujava.example.model;
+package org.soujava.metadata.processor;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -17,14 +17,6 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import static org.soujava.example.model.EntityProcessor.HAS_ACCESS;
-import static org.soujava.example.model.EntityProcessor.HAS_ANNOTATION;
-import static org.soujava.example.model.EntityProcessor.IS_CONSTRUCTOR;
-import static org.soujava.example.model.EntityProcessor.IS_FIELD;
-import static org.soujava.example.model.ProcessorUtil.getPackageName;
-import static org.soujava.example.model.ProcessorUtil.getSimpleNameAsString;
-import static org.soujava.example.model.ProcessorUtil.isTypeElement;
 
 public class ClassAnalyzer implements Supplier<String> {
 
@@ -46,13 +38,13 @@ public class ClassAnalyzer implements Supplier<String> {
 
     @Override
     public String get() {
-        if (isTypeElement(entity)) {
+        if (ProcessorUtil.isTypeElement(entity)) {
             TypeElement typeElement = (TypeElement) entity;
             LOGGER.info("Processing the class: " + typeElement);
             boolean hasValidConstructor = processingEnv.getElementUtils().getAllMembers(typeElement)
                     .stream()
-                    .filter(IS_CONSTRUCTOR.and(HAS_ACCESS))
-                    .anyMatch(IS_CONSTRUCTOR.and(HAS_ACCESS));
+                    .filter(EntityProcessor.IS_CONSTRUCTOR.and(EntityProcessor.HAS_ACCESS))
+                    .anyMatch(EntityProcessor.IS_CONSTRUCTOR.and(EntityProcessor.HAS_ACCESS));
             if (hasValidConstructor) {
                 try {
                     return analyze(typeElement);
@@ -60,7 +52,7 @@ public class ClassAnalyzer implements Supplier<String> {
                     error(exception);
                 }
             } else {
-                throw new ValidationException("The class " + getSimpleNameAsString(entity) + " must have at least an either public or default constructor");
+                throw new ValidationException("The class " + ProcessorUtil.getSimpleNameAsString(entity) + " must have at least an either public or default constructor");
             }
         }
 
@@ -71,7 +63,7 @@ public class ClassAnalyzer implements Supplier<String> {
 
         final List<String> fields = processingEnv.getElementUtils()
                 .getAllMembers(typeElement).stream()
-                .filter(IS_FIELD.and(HAS_ANNOTATION))
+                .filter(EntityProcessor.IS_FIELD.and(EntityProcessor.HAS_ANNOTATION))
                 .map(f -> new FieldAnalyzer(f, processingEnv, typeElement))
                 .map(FieldAnalyzer::get)
                 .collect(Collectors.toList());
@@ -92,8 +84,8 @@ public class ClassAnalyzer implements Supplier<String> {
 
     private EntityModel getMetadata(TypeElement element, List<String> fields) {
         final Entity annotation = element.getAnnotation(Entity.class);
-        String packageName = getPackageName(element);
-        String sourceClassName = getSimpleNameAsString(element);
+        String packageName = ProcessorUtil.getPackageName(element);
+        String sourceClassName = ProcessorUtil.getSimpleNameAsString(element);
         String entityName = annotation.value().isBlank() ? sourceClassName : annotation.value();
         return new EntityModel(packageName, sourceClassName, entityName, fields);
     }

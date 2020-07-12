@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package org.soujava.example.model;
+package org.soujava.metadata.processor;
 
 import java.util.List;
 

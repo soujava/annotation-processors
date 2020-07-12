@@ -1,4 +1,4 @@
-package org.soujava.example.model;
+package org.soujava.metadata.processor;
 
 @Entity("kind")
 public class Animal {

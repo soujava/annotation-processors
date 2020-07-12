@@ -1,10 +1,9 @@
-package org.soujava.example.model;
+package org.soujava.metadata.processor;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.soujava.medatadata.api.Column;
-import org.soujava.medatadata.api.Entity;
 import org.soujava.medatadata.api.Id;
 
 import javax.annotation.processing.AbstractProcessor;

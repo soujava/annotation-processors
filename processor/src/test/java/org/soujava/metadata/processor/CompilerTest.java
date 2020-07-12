@@ -1,4 +1,4 @@
-package org.soujava.example.model;
+package org.soujava.metadata.processor;
 
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;

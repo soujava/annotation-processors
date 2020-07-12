@@ -1,4 +1,4 @@
-package org.soujava.example.model;
+package org.soujava.metadata.processor;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.PackageElement;
