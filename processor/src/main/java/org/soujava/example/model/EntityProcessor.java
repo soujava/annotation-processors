@@ -3,6 +3,9 @@ package org.soujava.example.model;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import org.soujava.medatadata.api.Column;
+import org.soujava.medatadata.api.Entity;
+import org.soujava.medatadata.api.Id;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -21,12 +24,11 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.logging.Logger;
 
 import static javax.lang.model.element.Modifier.PROTECTED;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
-@SupportedAnnotationTypes("org.soujava.example.model.Entity")
+@SupportedAnnotationTypes("org.soujava.medatadata.api.Entity")
 public class EntityProcessor extends AbstractProcessor {
 
     private static final EnumSet<Modifier> MODIFIERS = EnumSet.of(PUBLIC, PROTECTED);
