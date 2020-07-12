@@ -6,13 +6,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-         <groupId>org.soujava.example</groupId>
-         <artifactId>parent</artifactId>
-         <version>1.0.0</version>
+        <groupId>org.soujava.metadata</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
     </parent>
     <artifactId>compile</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
