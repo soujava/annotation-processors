@@ -6,23 +6,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-         <groupId>org.soujava.example</groupId>
-         <artifactId>parent</artifactId>
-         <version>1.0.0</version>
+        <groupId>org.soujava.metadata</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
     </parent>
     <artifactId>reflection</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.github.spullara.mustache.java</groupId>
-            <artifactId>compiler</artifactId>
-            <version>0.9.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.testing.compile</groupId>
-            <artifactId>compile-testing</artifactId>
-            <version>0.18</version>
-            <scope>test</scope>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>api</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
