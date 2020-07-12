@@ -22,9 +22,12 @@
  * SOFTWARE.
  */
 
-package org.soujava.metadata.processor;
+package org.soujava.metadata.example;
 
 import java.util.List;
+import org.soujava.medatadata.api.Column;
+import org.soujava.medatadata.api.Entity;
+import org.soujava.medatadata.api.Id;
 
 @Entity
 public class Person {
