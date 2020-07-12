@@ -32,7 +32,6 @@ import org.soujava.medatadata.api.Id;
 @Entity
 public class Person {
 
-
     @Id
     private Long id;
 
