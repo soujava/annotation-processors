@@ -1,6 +1,6 @@
 package {0};
 
-import jakarta.nosql.mapping.reflection.FieldWriter;
+import org.soujava.metadata.compiler.FieldWriter;
 
 public class {1} implements FieldWriter '{'
 
