@@ -23,8 +23,8 @@ class EntityMetadata {
         return type;
     }
 
-    public InstanceSupplier getSupplier() {
-        return supplier;
+    public <T> T newInstance() {
+        return (T) this.supplier.get();
     }
 
     public List<FieldMetadata> getFields() {
@@ -36,5 +36,6 @@ class EntityMetadata {
         final String value = annotation.value();
         return value.isEmpty() ? type.getSimpleName() : value;
     }
+
 
 }
