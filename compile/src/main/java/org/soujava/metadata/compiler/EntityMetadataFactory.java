@@ -10,10 +10,12 @@ class EntityMetadataFactory implements Function<Class<?>, EntityMetadata> {
 
     private final JavaCompilerFacade compilerFacade;
     private final FieldReaderFactory readerFactory;
+    private final FieldWriterFactory writerFactory;
 
     public EntityMetadataFactory() {
         this.compilerFacade = new JavaCompilerFacade(EntityMetadataFactory.class.getClassLoader());
         this.readerFactory = new FieldReaderFactory(compilerFacade);
+        this.writerFactory = new FieldWriterFactory(compilerFacade);
     }
 
     @Override
@@ -24,6 +26,8 @@ class EntityMetadataFactory implements Function<Class<?>, EntityMetadata> {
             final Column column = field.getAnnotation(Column.class);
             if (id != null || column != null) {
                 final FieldReader reader = readerFactory.apply(field);
+                final FieldWriter writer = writerFactory.apply(field);
+                final FieldMetadata metadata = new FieldMetadata(field, reader, writer);
             }
         }
         return null;

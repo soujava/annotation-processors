@@ -31,7 +31,7 @@ class FieldReaderFactory {
         Optional<String> methodName = getMethodName(declaringClass, field);
 
         return methodName.map(compile(declaringClass))
-                .orElseThrow(() -> new RuntimeException("there is an issue to compile"));
+                .orElseThrow(() -> new RuntimeException("there is an issue to compile a FieldReader"));
 
     }
 
@@ -49,9 +49,9 @@ class FieldReaderFactory {
         };
     }
 
-    private FieldReader newInstance(Class<? extends FieldReader> aClass) {
+    private FieldReader newInstance(Class<? extends FieldReader> readerClass) {
         try {
-            return aClass.newInstance();
+            return (FieldReader) readerClass.getConstructors()[0].newInstance();
         } catch (Exception e) {
             throw new RuntimeException("An issue to create a new instance class", e);
         }
