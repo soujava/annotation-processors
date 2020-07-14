@@ -1,5 +1,7 @@
 package org.soujava.metadata.compiler;
 
+import org.soujava.medatadata.api.Entity;
+
 import java.util.List;
 
 class EntityMetadata {
@@ -28,4 +30,11 @@ class EntityMetadata {
     public List<FieldMetadata> getFields() {
         return fields;
     }
+
+    public String getName() {
+        final Entity annotation = type.getAnnotation(Entity.class);
+        final String value = annotation.value();
+        return value.isEmpty() ? type.getSimpleName() : value;
+    }
+
 }
