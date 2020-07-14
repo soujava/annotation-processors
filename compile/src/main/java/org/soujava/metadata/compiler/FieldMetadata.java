@@ -35,6 +35,10 @@ class FieldMetadata {
         return this.reader.read(entity);
     }
 
+    public <T> void write(T entity, Object value) {
+        this.writer.write(entity, value);
+    }
+
     @Override
     public String toString() {
         return "FieldMetadata{" +
