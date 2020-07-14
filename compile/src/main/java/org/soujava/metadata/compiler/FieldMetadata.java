@@ -19,17 +19,6 @@ class FieldMetadata {
         this.writer = writer;
     }
 
-    public Field getField() {
-        return field;
-    }
-
-    public FieldReader getReader() {
-        return reader;
-    }
-
-    public FieldWriter getWriter() {
-        return writer;
-    }
 
     public String getName() {
         final Id id = field.getAnnotation(Id.class);
