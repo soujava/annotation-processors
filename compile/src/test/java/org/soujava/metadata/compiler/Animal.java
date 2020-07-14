@@ -4,7 +4,7 @@ import org.soujava.medatadata.api.Column;
 import org.soujava.medatadata.api.Entity;
 import org.soujava.medatadata.api.Id;
 
-@Entity
+@Entity("animal")
 public class Animal {
 
     @Id
