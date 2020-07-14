@@ -24,9 +24,12 @@ public class CompileMapper implements Mapper {
     @Override
     public <T> Map<String, Object> toMap(T entity) {
         Objects.requireNonNull(entity, "entity is required");
-        Map<String, Object> map = new HashMap<>();
         final EntityMetadata entityMetadata = getEntityMetadata(entity.getClass());
+        Map<String, Object> map = new HashMap<>();
         map.put("entity", entityMetadata.getName());
+        for (FieldMetadata field : entityMetadata.getFields()) {
+            map.put(field.getName(), field.getValue(entity));
+        }
         return map;
     }
 

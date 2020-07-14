@@ -1,8 +1,11 @@
 package org.soujava.metadata.compiler;
 
+import org.soujava.medatadata.api.Column;
+import org.soujava.medatadata.api.Id;
+
 import java.lang.reflect.Field;
 
-public class FieldMetadata {
+class FieldMetadata {
 
     private final Field field;
 
@@ -28,6 +31,21 @@ public class FieldMetadata {
         return writer;
     }
 
+    public String getName() {
+        final Id id = field.getAnnotation(Id.class);
+        final Column column = field.getAnnotation(Column.class);
+        if (id != null) {
+            return id.value().isEmpty() ? field.getName() : id.value();
+        } else if (column != null) {
+            return column.value().isEmpty() ? field.getName() : column.value();
+        }
+        return field.getName();
+    }
+
+    public <T> Object getValue(T entity) {
+        return this.reader.read(entity);
+    }
+
     @Override
     public String toString() {
         return "FieldMetadata{" +
@@ -36,4 +54,5 @@ public class FieldMetadata {
                 ", writer=" + writer +
                 '}';
     }
+
 }
