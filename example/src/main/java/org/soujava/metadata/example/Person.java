@@ -68,19 +68,19 @@ public class Person {
         this.email = email;
     }
 
-    Long getId() {
+    public Long getId() {
         return id;
     }
 
-    void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    List<String> getContacts() {
+    public List<String> getContacts() {
         return contacts;
     }
 
-    void setContacts(List<String> contacts) {
+    public void setContacts(List<String> contacts) {
         this.contacts = contacts;
     }
 }
