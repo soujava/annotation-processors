@@ -5,6 +5,8 @@ import org.soujava.medatadata.api.Mapper;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class CompileMapper implements Mapper {
 
@@ -17,7 +19,17 @@ public class CompileMapper implements Mapper {
         Objects.requireNonNull(type, "type is required");
 
         final EntityMetadata entityMetadata = getEntityMetadata(type);
-        entityMetadata.getFields();
+        final T instance = entityMetadata.newInstance();
+        final Map<String, FieldMetadata> fieldMap = entityMetadata.getFields().stream()
+                .collect(Collectors.toMap(FieldMetadata::getName, Function.identity()));
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            final FieldMetadata metadata = fieldMap.get(entry.getKey());
+            if (metadata != null) {
+                metadata.write(entry, entry.getValue());
+            }
+        }
+
         return null;
     }
 
@@ -28,7 +40,10 @@ public class CompileMapper implements Mapper {
         Map<String, Object> map = new HashMap<>();
         map.put("entity", entityMetadata.getName());
         for (FieldMetadata field : entityMetadata.getFields()) {
-            map.put(field.getName(), field.getValue(entity));
+            final Object value = field.getValue(entity);
+            if (value != null) {
+                map.put(field.getName(), value);
+            }
         }
         return map;
     }
