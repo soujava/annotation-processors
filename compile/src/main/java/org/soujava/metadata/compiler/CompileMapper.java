@@ -26,11 +26,11 @@ public class CompileMapper implements Mapper {
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             final FieldMetadata metadata = fieldMap.get(entry.getKey());
             if (metadata != null) {
-                metadata.write(entry, entry.getValue());
+                metadata.write(instance, entry.getValue());
             }
         }
 
-        return null;
+        return instance;
     }
 
     @Override
