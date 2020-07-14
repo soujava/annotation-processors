@@ -21,6 +21,18 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>reflection</artifactId>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>compile</artifactId>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
