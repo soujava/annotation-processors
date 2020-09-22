@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.annotation.processing.Generated;
+
+@Generated("Soujava Mapper Generator")
 public class ProcessorMap implements Mapper {
 
     private final ClassMappings mappings;
