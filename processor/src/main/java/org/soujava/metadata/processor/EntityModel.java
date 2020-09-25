@@ -2,7 +2,7 @@ package org.soujava.metadata.processor;
 
 import java.util.List;
 
-public class EntityModel {
+public class EntityModel extends BaseMappingModel {
 
     private final String packageName;
 

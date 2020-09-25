@@ -2,7 +2,7 @@ package org.soujava.metadata.processor;
 
 import java.util.List;
 
-public class FieldModel {
+public class FieldModel extends BaseMappingModel {
 
     private final String packageName;
     private final String name;

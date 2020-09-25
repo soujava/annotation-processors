@@ -2,7 +2,7 @@ package org.soujava.metadata.processor;
 
 import java.util.List;
 
-public class ClassMappingsModel {
+public class ClassMappingsModel extends BaseMappingModel {
 
     private final List<String> entities;
 
