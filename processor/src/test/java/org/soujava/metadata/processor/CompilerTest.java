@@ -114,4 +114,16 @@ public class CompilerTest {
         assertThat(compilation).succeeded();
     }
 
+    @Test
+    public void shouldCompileProtected() throws IOException {
+        final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person8.java");
+        Compilation compilation = javac()
+                .withClasspathFrom(Entity.class.getClassLoader())
+                .withOptions()
+                .withProcessors(new EntityProcessor())
+                .compile(javaFileObject);
+        assertThat(compilation).succeeded();
+    }
+
+
 }
