@@ -103,12 +103,9 @@ public class CompilerTest {
         assertThat(compilation).succeeded();
     }
 
-
     @Test
     public void shouldCompileDefaultPackage() throws IOException {
-
         final JavaFileObject javaFileObject = JavaFileObjects.forResource("Person7.java");
-
         Compilation compilation = javac()
                 .withClasspathFrom(Entity.class.getClassLoader())
                 .withOptions()
@@ -116,6 +113,5 @@ public class CompilerTest {
                 .compile(javaFileObject);
         assertThat(compilation).succeeded();
     }
-
 
 }
