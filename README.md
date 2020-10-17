@@ -1,4 +1,4 @@
-# annotation-processors: Part 3
+# Modern Cloud-Native Jakarta EE Frameworks: tips, challenges, and trends
 
 This part demonstrates the generation of Java source code.
 
@@ -10,7 +10,8 @@ Compile the Project:
 mvn clean install
 ```
 
-The annotation processor will generate the _com.cloudogu.blog.PersonJsonWriter_ class in
- _tojson-example/target/classes_. The generation is tested by
- [PersonTest.java](tojson-example/src/test/java/com/cloudogu/blog/PersonTest.java) which uses the generated class to
- create json for a person object.
+## Articles
+
+* (Portuguese)[https://www.infoq.com/br/articles/frameworks-java-na-era-cloud-native-java-Jakarta/]
+* [English](https://dzone.com/articles/modern-cloud-native-jakarta-ee-frameworks)
+* [French](https://www.infoq.com/fr/articles/java-frameworks-cloud-native/)
