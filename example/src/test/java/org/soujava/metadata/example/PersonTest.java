@@ -3,9 +3,9 @@ package org.soujava.metadata.example;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.soujava.metadata.processor.ClassMappings;
-import org.soujava.metadata.processor.EntityMetadata;
-import org.soujava.metadata.processor.FieldMetadata;
+import org.soujava.medatadata.api.ClassMappings;
+import org.soujava.medatadata.api.EntityMetadata;
+import org.soujava.medatadata.api.FieldMetadata;
 
 import java.util.Map;
 
