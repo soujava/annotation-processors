@@ -46,7 +46,7 @@ public class ReflectionMapper implements Mapper {
         map.put("entity", name);
         for (Field field : type.getDeclaredFields()) {
             try {
-                write(entity, map, field);
+                read(entity, map, field);
             } catch (IllegalAccessException exception) {
                 throw new RuntimeException("An error to field the map process", exception);
             }
@@ -55,7 +55,7 @@ public class ReflectionMapper implements Mapper {
         return map;
     }
 
-    private <T> void write(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
+    private <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
         final Id id = field.getAnnotation(Id.class);
         final Column column = field.getAnnotation(Column.class);
         final String fieldName = field.getName();
