@@ -1,5 +1,8 @@
 package org.soujava.metadata.processor;
 
+import org.soujava.medatadata.api.ClassMappings;
+import org.soujava.medatadata.api.EntityMetadata;
+import org.soujava.medatadata.api.FieldMetadata;
 import org.soujava.medatadata.api.Mapper;
 
 import java.util.HashMap;

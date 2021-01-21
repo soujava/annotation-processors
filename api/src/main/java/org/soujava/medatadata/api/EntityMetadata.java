@@ -1,4 +1,4 @@
-package org.soujava.metadata.processor;
+package org.soujava.medatadata.api;
 
 import java.util.List;
 import java.util.Map;
