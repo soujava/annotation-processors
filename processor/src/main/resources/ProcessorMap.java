@@ -4,6 +4,7 @@ import org.soujava.medatadata.api.ClassMappings;
 import org.soujava.medatadata.api.EntityMetadata;
 import org.soujava.medatadata.api.FieldMetadata;
 import org.soujava.medatadata.api.Mapper;
+import org.soujava.medatadata.api.MapperException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class ProcessorMap implements Mapper {
         Objects.requireNonNull(map, "map is required");
         Objects.requireNonNull(type, "type is required");
         final EntityMetadata entityMetadata = Optional.ofNullable(mappings.get(type))
-                .orElseThrow(() -> new ValidationException("The entity has not Entity annotation"));
+                .orElseThrow(() -> new MapperException("The entity has not Entity annotation"));
         final Map<String, FieldMetadata> groupByName = entityMetadata.getFieldsGroupByName();
         T instance = entityMetadata.newInstance();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
@@ -43,7 +44,7 @@ public class ProcessorMap implements Mapper {
         Objects.requireNonNull(entity, "entity is required");
         Map<String, Object> map = new HashMap<>();
         final EntityMetadata entityMetadata = Optional.ofNullable(mappings.get(entity.getClass()))
-                .orElseThrow(() -> new ValidationException("The entity has not Entity annotation"));
+                .orElseThrow(() -> new MapperException("The entity has not Entity annotation"));
         map.put("entity", entityMetadata.getName());
         for (FieldMetadata field : entityMetadata.getFields()) {
             final Object value = field.read(entity);

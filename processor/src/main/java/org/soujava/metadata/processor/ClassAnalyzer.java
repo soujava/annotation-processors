@@ -4,6 +4,7 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.soujava.medatadata.api.Entity;
+import org.soujava.medatadata.api.MapperException;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -52,7 +53,7 @@ public class ClassAnalyzer implements Supplier<String> {
                     error(exception);
                 }
             } else {
-                throw new ValidationException("The class " + ProcessorUtil.getSimpleNameAsString(entity) + " must have at least an either public or default constructor");
+                throw new MapperException("The class " + ProcessorUtil.getSimpleNameAsString(entity) + " must have at least an either public or default constructor");
             }
         }
 

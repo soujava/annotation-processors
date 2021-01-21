@@ -5,6 +5,7 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 import org.soujava.medatadata.api.Column;
 import org.soujava.medatadata.api.Id;
+import org.soujava.medatadata.api.MapperException;
 
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -53,7 +54,7 @@ public class FieldAnalyzer implements Supplier<String> {
         try (Writer writer = fileObject.openWriter()) {
             template.execute(writer, metadata);
         } catch (IOException exception) {
-            throw new ValidationException("An error to compile the class: " +
+            throw new MapperException("An error to compile the class: " +
                     metadata.getQualified(), exception);
         }
         return metadata.getQualified();
@@ -63,7 +64,7 @@ public class FieldAnalyzer implements Supplier<String> {
         try {
             return filer.createSourceFile(metadata.getQualified(), entity);
         } catch (IOException exception) {
-            throw new ValidationException("An error to create the class: " +
+            throw new MapperException("An error to create the class: " +
                     metadata.getQualified(), exception);
         }
 
@@ -136,8 +137,8 @@ public class FieldAnalyzer implements Supplier<String> {
         }
     }
 
-    private Supplier<ValidationException> generateGetterError(String fieldName, String packageName, String entity, String s) {
-        return () -> new ValidationException(s + fieldName + " in the class: " + packageName + "." + entity);
+    private Supplier<MapperException> generateGetterError(String fieldName, String packageName, String entity, String s) {
+        return () -> new MapperException(s + fieldName + " in the class: " + packageName + "." + entity);
     }
 
     private Mustache createTemplate() {
