@@ -19,7 +19,7 @@ public class ProcessorMap implements Mapper {
     private final ClassMappings mappings;
 
     public ProcessorMap() {
-        this.mappings = new DefaultClassMappings();
+        this.mappings = new ProcessorClassMappings();
     }
 
     @Override

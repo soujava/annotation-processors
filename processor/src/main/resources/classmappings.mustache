@@ -10,11 +10,11 @@ import org.soujava.medatadata.api.EntityMetadata;
 import javax.annotation.processing.Generated;
 
 @Generated(value= "Soujava ClassMappings Generator", date = "{{now}}")
-public final class DefaultClassMappings implements ClassMappings {
+public final class ProcessorClassMappings implements ClassMappings {
 
     private final List<EntityMetadata> entities;
 
-    public DefaultClassMappings() {
+    public ProcessorClassMappings() {
         this.entities = new ArrayList<>();
     {{#entities}}
         this.entities.add(new {{.}}());
