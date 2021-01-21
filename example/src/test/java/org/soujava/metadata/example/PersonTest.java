@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class PersonTest {
 
-    private ClassMappings mappings = new org.soujava.metadata.processor.DefaultClassMappings();
+    private ClassMappings mappings = new org.soujava.metadata.processor.ProcessorClassMappings();
 
     @Test
     public void shouldCreate() {
