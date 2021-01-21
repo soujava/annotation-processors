@@ -23,14 +23,14 @@ public class ReflectionMapperTest {
         final Map<String, Object> map = mapper.toMap(animal);
         Assertions.assertEquals("animal", map.get("entity"));
         Assertions.assertEquals("id", map.get("id"));
-        Assertions.assertEquals("lion", map.get("name"));
+        Assertions.assertEquals("lion", map.get("native_name"));
     }
 
     @Test
     public void shouldCreateEntity() {
         Map<String, Object> map = new HashMap<>();
         map.put("id", "id");
-        map.put("name", "lion");
+        map.put("native_name", "lion");
 
         final Animal animal = mapper.toEntity(map, Animal.class);
         Assertions.assertEquals("id", animal.getId());

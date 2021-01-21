@@ -11,7 +11,7 @@ public class Animal {
     @Id
     private String id;
 
-    @Column
+    @Column("native_name")
     private String name;
 
     public Animal() {
