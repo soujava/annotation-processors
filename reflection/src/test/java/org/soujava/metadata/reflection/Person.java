@@ -2,6 +2,7 @@ package org.soujava.metadata.reflection;
 
 
 import org.soujava.medatadata.api.Column;
+import org.soujava.medatadata.api.Constructor;
 import org.soujava.medatadata.api.Entity;
 import org.soujava.medatadata.api.Id;
 
@@ -17,6 +18,7 @@ public class Person {
     @Column
     private final  String country;
 
+    @Constructor
     public Person(String id, String name, String country) {
         this.id = id;
         this.name = name;
