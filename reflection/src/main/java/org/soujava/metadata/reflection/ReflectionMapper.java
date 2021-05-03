@@ -4,14 +4,17 @@ import org.soujava.medatadata.api.Column;
 import org.soujava.medatadata.api.Entity;
 import org.soujava.medatadata.api.Id;
 import org.soujava.medatadata.api.Mapper;
+import org.soujava.medatadata.api.MapperException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class ReflectionMapper implements Mapper {
 
@@ -20,9 +23,9 @@ public class ReflectionMapper implements Mapper {
         Objects.requireNonNull(map, "Map is required");
         Objects.requireNonNull(type, "type is required");
 
-        final Constructor<?>[] constructors = type.getConstructors();
         try {
-            final T instance = (T) constructors[0].newInstance();
+            Constructor<T> constructor = findConstructor(type);
+            final T instance = constructor.newInstance();
             for (Field field : type.getDeclaredFields()) {
                 write(map, instance, field);
             }
@@ -91,5 +94,16 @@ public class ReflectionMapper implements Mapper {
                 field.set(instance, value);
             }
         }
+    }
+
+    private <T> Constructor<T> findConstructor(Class<T> type) {
+        Constructor<T>[] constructors = (Constructor<T>[]) type.getConstructors();
+        if (constructors.length == 1) {
+            return constructors[0];
+        }
+        return Stream.of(constructors)
+                .filter(c -> c.getAnnotation(org.soujava.medatadata.api.Constructor.class) != null)
+                .findFirst()
+                .orElseThrow(() -> new MapperException("The constructor is required in the class: " + type));
     }
 }
