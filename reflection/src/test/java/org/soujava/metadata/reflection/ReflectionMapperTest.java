@@ -46,4 +46,15 @@ public class ReflectionMapperTest {
         Assertions.assertEquals("Ada Lovelace", map.get("name"));
         Assertions.assertEquals("England", map.get("country"));
     }
+
+    @Test
+    public void shouldCreateFromImmutableEntity() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", "id");
+        map.put("native_name", "lion");
+
+        final Animal animal = mapper.toEntity(map, Animal.class);
+        Assertions.assertEquals("id", animal.getId());
+        Assertions.assertEquals("lion", animal.getName());
+    }
 }
