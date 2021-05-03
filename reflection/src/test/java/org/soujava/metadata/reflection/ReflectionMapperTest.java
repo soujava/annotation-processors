@@ -51,10 +51,12 @@ public class ReflectionMapperTest {
     public void shouldCreateFromImmutableEntity() {
         Map<String, Object> map = new HashMap<>();
         map.put("id", "id");
-        map.put("native_name", "lion");
+        map.put("name", "Ada Lovelace");
+        map.put("country", "England");
 
-        final Animal animal = mapper.toEntity(map, Animal.class);
-        Assertions.assertEquals("id", animal.getId());
-        Assertions.assertEquals("lion", animal.getName());
+        final Person person = mapper.toEntity(map, Person.class);
+        Assertions.assertEquals("id", person.getId());
+        Assertions.assertEquals("Ada Lovelace", person.getName());
+        Assertions.assertEquals("England", person.getCountry());
     }
 }
