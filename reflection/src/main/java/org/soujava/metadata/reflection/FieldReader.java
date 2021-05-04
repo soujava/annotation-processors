@@ -1,9 +1,12 @@
-package org.soujava.medatadata.api;
+package org.soujava.metadata.reflection;
+
+import org.soujava.medatadata.api.Column;
+import org.soujava.medatadata.api.Id;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
-public interface FieldReader {
+interface FieldReader {
 
     <T> void read(T entity, Map<String, Object> map) throws IllegalAccessException;
 
