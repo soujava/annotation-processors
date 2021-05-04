@@ -61,7 +61,7 @@ public class ReflectionMapper implements Mapper {
 
     private <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
         FieldReader reader = FieldReader.of(field);
-        reader.read(entity, map, field);
+        reader.read(entity, map);
     }
 
     private <T> void write(Map<String, Object> map, T instance, Field field) throws IllegalAccessException {
