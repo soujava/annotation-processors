@@ -5,13 +5,19 @@ import java.util.Map;
 
 public interface FieldReader {
 
-    <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException;
+    <T> void read(T entity, Map<String, Object> map) throws IllegalAccessException;
 
 
     class IdFieldReader implements FieldReader {
 
+        private final Field field;
+
+        public IdFieldReader(Field field) {
+            this.field = field;
+        }
+
         @Override
-        public <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
+        public <T> void read(T entity, Map<String, Object> map) throws IllegalAccessException {
             final Id id = field.getAnnotation(Id.class);
             final String fieldName = field.getName();
             String idName = id.value().isBlank() ? fieldName : id.value();
@@ -23,8 +29,14 @@ public interface FieldReader {
 
     class ColumnFieldReader implements FieldReader {
 
+        private final Field field;
+
+        public ColumnFieldReader(Field field) {
+            this.field = field;
+        }
+
         @Override
-        public <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
+        public <T> void read(T entity, Map<String, Object> map) throws IllegalAccessException {
             final Column column = field.getAnnotation(Column.class);
             final String fieldName = field.getName();
             String columnName = column.value().isBlank() ? fieldName : column.value();
@@ -37,16 +49,16 @@ public interface FieldReader {
     class NoopFieldReader implements FieldReader {
 
         @Override
-        public <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
+        public <T> void read(T entity, Map<String, Object> map) throws IllegalAccessException {
 
         }
     }
 
     static FieldReader of(Field field) {
         if (field.getAnnotation(Id.class) != null) {
-            return new IdFieldReader();
+            return new IdFieldReader(field);
         } else if (field.getAnnotation(Column.class) != null) {
-            return new ColumnFieldReader();
+            return new ColumnFieldReader(field);
         } else {
             return new NoopFieldReader();
         }
