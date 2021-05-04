@@ -43,6 +43,12 @@ public interface FieldReader {
     }
 
     static FieldReader of(Field field) {
-        return field.getAnnotation(Id.class) ? null
+        if (field.getAnnotation(Id.class) != null) {
+            return new IdFieldReader();
+        } else if (field.getAnnotation(Column.class) != null) {
+            return new ColumnFieldReader();
+        } else {
+            return new NoopFieldReader();
+        }
     }
 }

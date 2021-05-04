@@ -2,6 +2,7 @@ package org.soujava.metadata.reflection;
 
 import org.soujava.medatadata.api.Column;
 import org.soujava.medatadata.api.Entity;
+import org.soujava.medatadata.api.FieldReader;
 import org.soujava.medatadata.api.Id;
 import org.soujava.medatadata.api.Mapper;
 import org.soujava.medatadata.api.MapperException;
@@ -59,20 +60,8 @@ public class ReflectionMapper implements Mapper {
     }
 
     private <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
-        final Id id = field.getAnnotation(Id.class);
-        final Column column = field.getAnnotation(Column.class);
-        final String fieldName = field.getName();
-        if (id != null) {
-            String idName = id.value().isBlank() ? fieldName : id.value();
-            field.setAccessible(true);
-            final Object value = field.get(entity);
-            map.put(idName, value);
-        } else if (column != null) {
-            String columnName = column.value().isBlank() ? fieldName : column.value();
-            field.setAccessible(true);
-            final Object value = field.get(entity);
-            map.put(columnName, value);
-        }
+        FieldReader reader = FieldReader.of(field);
+        reader.read(entity, map, field);
     }
 
     private <T> void write(Map<String, Object> map, T instance, Field field) throws IllegalAccessException {
