@@ -10,7 +10,6 @@ import org.soujava.medatadata.api.MapperException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -50,18 +49,13 @@ public class ReflectionMapper implements Mapper {
         map.put("entity", name);
         for (Field field : type.getDeclaredFields()) {
             try {
-                read(entity, map, field);
+                FieldReader reader = FieldReader.of(field);
+                reader.read(entity, map);
             } catch (IllegalAccessException exception) {
                 throw new RuntimeException("An error to field the map process", exception);
             }
         }
-
         return map;
-    }
-
-    private <T> void read(T entity, Map<String, Object> map, Field field) throws IllegalAccessException {
-        FieldReader reader = FieldReader.of(field);
-        reader.read(entity, map);
     }
 
     private <T> void write(Map<String, Object> map, T instance, Field field) throws IllegalAccessException {
