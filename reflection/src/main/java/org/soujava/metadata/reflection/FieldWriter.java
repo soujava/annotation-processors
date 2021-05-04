@@ -1,4 +1,7 @@
-package org.soujava.medatadata.api;
+package org.soujava.metadata.reflection;
+
+import org.soujava.medatadata.api.Column;
+import org.soujava.medatadata.api.Id;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -51,19 +54,19 @@ interface FieldWriter {
     }
 
     class NooPFieldWriter implements FieldWriter {
-
         @Override
         public <T> void write(Map<String, Object> map, T instance) throws IllegalAccessException {
 
         }
     }
+
     static FieldWriter of(Field field) {
         if (Objects.nonNull(field.getAnnotation(Id.class))) {
             return new IdFieldWriter(field);
         } else if (Objects.nonNull(field.getAnnotation(Column.class))) {
             return new ColumnFieldWriter(field);
         } else {
-
+            return new NooPFieldWriter();
         }
     }
 
