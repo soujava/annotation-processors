@@ -24,7 +24,8 @@ public class ReflectionMapper implements Mapper {
             Constructor<T> constructor = findConstructor(type);
             final T instance = constructor.newInstance();
             for (Field field : type.getDeclaredFields()) {
-                write(map, instance, field);
+                FieldWriter writer = FieldWriter.of(field);
+                writer.write(map, instance);
             }
             return instance;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
@@ -53,11 +54,6 @@ public class ReflectionMapper implements Mapper {
             }
         }
         return map;
-    }
-
-    private <T> void write(Map<String, Object> map, T instance, Field field) throws IllegalAccessException {
-        FieldWriter writer = FieldWriter.of(field);
-        writer.write(map, instance);
     }
 
     private <T> Constructor<T> findConstructor(Class<T> type) {
