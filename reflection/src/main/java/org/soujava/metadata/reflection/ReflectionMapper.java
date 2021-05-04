@@ -29,7 +29,7 @@ public class ReflectionMapper implements Mapper {
             }
             return instance;
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
-            throw new RuntimeException("An error to field the entity process", exception);
+            throw new MapperException("An error to field the entity process", exception);
         }
     }
 
@@ -50,7 +50,7 @@ public class ReflectionMapper implements Mapper {
                 FieldReader reader = FieldReader.of(field);
                 reader.read(entity, map);
             } catch (IllegalAccessException exception) {
-                throw new RuntimeException("An error to field the map process", exception);
+                throw new MapperException("An error to field the map process", exception);
             }
         }
         return map;
