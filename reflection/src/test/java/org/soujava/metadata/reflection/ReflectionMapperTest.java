@@ -43,7 +43,7 @@ public class ReflectionMapperTest {
         final Map<String, Object> map = mapper.toMap(person);
         Assertions.assertEquals("Person", map.get("entity"));
         Assertions.assertEquals("id", map.get("id"));
-        Assertions.assertEquals("Ada Lovelace", map.get("name"));
+        Assertions.assertEquals("Ada Lovelace", map.get("native"));
         Assertions.assertEquals("England", map.get("country"));
     }
 
@@ -51,7 +51,7 @@ public class ReflectionMapperTest {
     public void shouldCreateFromImmutableEntity() {
         Map<String, Object> map = new HashMap<>();
         map.put("id", "id");
-        map.put("name", "Ada Lovelace");
+        map.put("native", "Ada Lovelace");
         map.put("country", "England");
 
         final Person person = mapper.toEntity(map, Person.class);
