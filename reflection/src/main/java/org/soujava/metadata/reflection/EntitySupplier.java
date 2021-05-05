@@ -30,6 +30,21 @@ interface EntitySupplier<T> {
         }
     }
 
+    class ConstructorEntitySupplier<T> implements EntitySupplier<T> {
+
+        private final Constructor<T> constructor;
+
+        ConstructorEntitySupplier(Constructor<T> constructor) {
+            this.constructor = constructor;
+        }
+
+        @Override
+        public T toEntity(Map<String, Object> map, Class<T> type) throws InvocationTargetException,
+                InstantiationException, IllegalAccessException {
+
+            return null;
+        }
+    }
     static <T> EntitySupplier<T> of(Constructor<T> constructor) {
         if (constructor.getParameters().length == 0) {
             return new FieldEntitySupplier<>(constructor);
