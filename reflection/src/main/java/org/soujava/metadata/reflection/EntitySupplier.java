@@ -45,10 +45,11 @@ interface EntitySupplier<T> {
             return null;
         }
     }
+
     static <T> EntitySupplier<T> of(Constructor<T> constructor) {
         if (constructor.getParameters().length == 0) {
             return new FieldEntitySupplier<>(constructor);
         }
-        return null;
+        return new ConstructorEntitySupplier<>(constructor);
     }
 }
