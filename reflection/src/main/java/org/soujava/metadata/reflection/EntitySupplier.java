@@ -1,9 +1,15 @@
 package org.soujava.metadata.reflection;
 
+import org.soujava.medatadata.api.MapperException;
+import org.soujava.medatadata.api.Param;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 interface EntitySupplier<T> {
 
@@ -42,6 +48,14 @@ interface EntitySupplier<T> {
         public T toEntity(Map<String, Object> map, Class<T> type) throws InvocationTargetException,
                 InstantiationException, IllegalAccessException {
 
+
+            ArrayList<Object> parameters = new ArrayList<>(constructor.getParameters().length);
+            for (Parameter parameter : constructor.getParameters()) {
+                Param param = parameter.getAnnotation(Param.class);
+                String paramName = Optional.ofNullable(param)
+                        .map(Param::value)
+                        .orElseThrow(() -> new MapperException(""));
+            }
             return null;
         }
     }
