@@ -22,17 +22,8 @@ public class ReflectionMapper implements Mapper {
 
         try {
             Constructor<T> constructor = findConstructor(type);
-            if (constructor.getParameters().length == 0) {
-                final T instance = constructor.newInstance();
-                for (Field field : type.getDeclaredFields()) {
-                    FieldWriter writer = FieldWriter.of(field);
-                    writer.write(map, instance);
-                }
-                return instance;
-            }
-
-            return null;
-
+            EntitySupplier<T> supplier = EntitySupplier.of(constructor);
+            return supplier.toEntity(map, type);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
             throw new MapperException("An error to field the entity process", exception);
         }
