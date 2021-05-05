@@ -7,7 +7,8 @@ import java.util.Map;
 
 interface EntitySupplier<T> {
 
-    T toEntity(Map<String, Object> map, Class<T> type) throws InvocationTargetException, InstantiationException, IllegalAccessException;
+    T toEntity(Map<String, Object> map, Class<T> type) throws InvocationTargetException,
+            InstantiationException, IllegalAccessException;
 
     class FieldEntitySupplier<T> implements EntitySupplier<T> {
 
@@ -29,4 +30,10 @@ interface EntitySupplier<T> {
         }
     }
 
+    static <T> EntitySupplier<T> of(Constructor<T> constructor) {
+        if (constructor.getParameters().length == 0) {
+            return new FieldEntitySupplier<>(constructor);
+        }
+        return null;
+    }
 }
