@@ -5,6 +5,7 @@ import org.soujava.medatadata.api.Column;
 import org.soujava.medatadata.api.Constructor;
 import org.soujava.medatadata.api.Entity;
 import org.soujava.medatadata.api.Id;
+import org.soujava.medatadata.api.Param;
 
 @Entity
 public class Person {
@@ -12,14 +13,16 @@ public class Person {
     @Id
     private final String id;
 
-    @Column
-    private final  String name;
+    @Column("native")
+    private final String name;
 
     @Column
-    private final  String country;
+    private final String country;
 
     @Constructor
-    public Person(String id, String name, String country) {
+    public Person(@Param("id") String id,
+                  @Param("name") String name,
+                  @Param("country") String country) {
         this.id = id;
         this.name = name;
         this.country = country;
